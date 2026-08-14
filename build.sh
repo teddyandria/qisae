@@ -18,6 +18,10 @@ python manage.py migrate
 # Référentiel du cahier des charges : idempotent, sans effet si déjà chargé.
 python manage.py charger_referentiel
 
+# Compte administrateur initial : le Shell de Render est payant, donc
+# `createsuperuser` (interactif) est inutilisable. Sans variables, ne fait rien.
+python manage.py creer_admin
+
 # Jeu de démonstration, seulement si demandé (CHARGER_DEMO=1).
 if [ "${CHARGER_DEMO:-0}" = "1" ]; then
   echo "→ Jeu de démonstration"

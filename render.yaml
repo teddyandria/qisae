@@ -23,3 +23,11 @@ services:
         sync: false # à coller depuis Neon
       - key: CHARGER_DEMO
         value: "0" # passer à 1 pour charger les 30 profils fictifs
+      # Compte administrateur initial, créé au build faute de Shell sur le plan
+      # gratuit. Valeurs à saisir dans le tableau de bord : jamais dans le dépôt.
+      - key: ADMIN_IDENTIFIANT
+        sync: false
+      - key: ADMIN_MOT_DE_PASSE
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
