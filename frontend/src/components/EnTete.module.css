@@ -1,0 +1,129 @@
+.barre {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: var(--entete);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 18px;
+  background: rgba(20, 21, 26, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--ligne);
+}
+
+.marque {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  color: var(--encre);
+}
+
+/* Repère de plateau : le carré plein rappelle le point rouge d'enregistrement,
+   en accent studio plutôt qu'en rouge criard. */
+.pastille {
+  width: 9px;
+  height: 9px;
+  background: var(--chinagraphe);
+  flex: none;
+}
+
+.titre {
+  font-family: var(--display);
+  font-size: 17px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.separateur {
+  width: 1px;
+  height: 20px;
+  background: var(--ligne);
+}
+
+.contexte {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--annotation);
+}
+
+.espace {
+  flex: 1 1 auto;
+}
+
+.compte {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--annotation);
+}
+
+.temoin {
+  width: 6px;
+  height: 6px;
+  background: var(--statut-ok);
+  flex: none;
+}
+
+.temoin[data-hors-ligne="true"] {
+  background: var(--statut-inactif);
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--chinagraphe-plein);
+  color: var(--sur-accent);
+  text-decoration: none;
+  padding: 7px 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: filter var(--transition), transform var(--transition);
+}
+
+.action:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.action:active {
+  transform: none;
+}
+
+.lien {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--annotation);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.lien:hover {
+  color: var(--encre);
+}
+
+@media (max-width: 720px) {
+  .contexte,
+  .separateur {
+    display: none;
+  }
+}
+
+/* La déconnexion est une action (POST), pas un lien : on l'aligne visuellement. */
+button.lien {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}

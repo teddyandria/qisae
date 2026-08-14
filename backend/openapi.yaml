@@ -1,0 +1,3149 @@
+openapi: 3.0.3
+info:
+  title: Casting DB API
+  version: 0.1.0
+paths:
+  /api/accents/:
+    get:
+      operationId: accents_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - accents
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Accent'
+          description: ''
+  /api/accents/{id}/:
+    get:
+      operationId: accents_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) accent.
+        required: true
+      tags:
+      - accents
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accent'
+          description: ''
+  /api/apparences/:
+    get:
+      operationId: apparences_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - apparences
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Apparence'
+          description: ''
+  /api/apparences/{id}/:
+    get:
+      operationId: apparences_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) apparence.
+        required: true
+      tags:
+      - apparences
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Apparence'
+          description: ''
+  /api/competences-artistiques/:
+    get:
+      operationId: competences_artistiques_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - competences-artistiques
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompetenceArtistique'
+          description: ''
+  /api/competences-artistiques/{id}/:
+    get:
+      operationId: competences_artistiques_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) compétence
+          artistique.
+        required: true
+      tags:
+      - competences-artistiques
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetenceArtistique'
+          description: ''
+  /api/competences-conduite/:
+    get:
+      operationId: competences_conduite_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - competences-conduite
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompetenceConduite'
+          description: ''
+  /api/competences-conduite/{id}/:
+    get:
+      operationId: competences_conduite_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) compétence
+          de conduite.
+        required: true
+      tags:
+      - competences-conduite
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetenceConduite'
+          description: ''
+  /api/competences-particulieres/:
+    get:
+      operationId: competences_particulieres_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - competences-particulieres
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompetenceParticuliere'
+          description: ''
+  /api/competences-particulieres/{id}/:
+    get:
+      operationId: competences_particulieres_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) compétence
+          particulière.
+        required: true
+      tags:
+      - competences-particulieres
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetenceParticuliere'
+          description: ''
+  /api/connexion/:
+    post:
+      operationId: connexion_create
+      description: |-
+        Ouvre une session à partir d'un identifiant et d'un mot de passe.
+
+        `csrf_protect` est explicite : DRF exempte ses vues du CSRF et ne le vérifie
+        qu'au moment d'authentifier une session existante. Sans ce décorateur, un site
+        tiers pourrait connecter la victime sur un compte qu'il contrôle (login CSRF).
+      tags:
+      - connexion
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Connexion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Connexion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Connexion'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+          description: ''
+  /api/costumes/:
+    get:
+      operationId: costumes_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - costumes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Costume'
+          description: ''
+  /api/costumes/{id}/:
+    get:
+      operationId: costumes_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) costume.
+        required: true
+      tags:
+      - costumes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Costume'
+          description: ''
+  /api/deconnexion/:
+    post:
+      operationId: deconnexion_create
+      description: Ferme la session courante.
+      tags:
+      - deconnexion
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+          description: ''
+  /api/departements/:
+    get:
+      operationId: departements_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - departements
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Departement'
+          description: ''
+  /api/departements/{id}/:
+    get:
+      operationId: departements_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) département.
+        required: true
+      tags:
+      - departements
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Departement'
+          description: ''
+  /api/instruments/:
+    get:
+      operationId: instruments_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - instruments
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instrument'
+          description: ''
+  /api/instruments/{id}/:
+    get:
+      operationId: instruments_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) instrument.
+        required: true
+      tags:
+      - instruments
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instrument'
+          description: ''
+  /api/langues/:
+    get:
+      operationId: langues_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - langues
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Langue'
+          description: ''
+  /api/langues/{id}/:
+    get:
+      operationId: langues_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) langue.
+        required: true
+      tags:
+      - langues
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Langue'
+          description: ''
+  /api/metiers/:
+    get:
+      operationId: metiers_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - metiers
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Metier'
+          description: ''
+  /api/metiers/{id}/:
+    get:
+      operationId: metiers_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) métier.
+        required: true
+      tags:
+      - metiers
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metier'
+          description: ''
+  /api/permis/:
+    get:
+      operationId: permis_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - permis
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Permis'
+          description: ''
+  /api/permis/{id}/:
+    get:
+      operationId: permis_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) permis.
+        required: true
+      tags:
+      - permis
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permis'
+          description: ''
+  /api/photos/:
+    get:
+      operationId: photos_list
+      description: Upload et suppression des photos d'un profil (multipart).
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      - in: query
+        name: profil
+        schema:
+          type: integer
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum:
+          - avec_barbe
+          - avec_lunettes
+          - cheveux_actuels
+          - pied
+          - portrait
+          - profil
+          - recente
+          - sans_barbe
+          - sans_lunettes
+        description: |-
+          * `portrait` - Portrait
+          * `pied` - En pied
+          * `profil` - Profil
+          * `recente` - Photo récente
+          * `sans_lunettes` - Sans lunettes
+          * `avec_lunettes` - Avec lunettes
+          * `cheveux_actuels` - Cheveux actuels
+          * `avec_barbe` - Avec barbe
+          * `sans_barbe` - Sans barbe
+      tags:
+      - photos
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PhotoEcriture'
+          description: ''
+    post:
+      operationId: photos_create
+      description: Upload et suppression des photos d'un profil (multipart).
+      tags:
+      - photos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhotoEcriture'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PhotoEcriture'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PhotoEcriture'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoEcriture'
+          description: ''
+  /api/photos/{id}/:
+    get:
+      operationId: photos_retrieve
+      description: Upload et suppression des photos d'un profil (multipart).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) photo.
+        required: true
+      tags:
+      - photos
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoEcriture'
+          description: ''
+    put:
+      operationId: photos_update
+      description: Upload et suppression des photos d'un profil (multipart).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) photo.
+        required: true
+      tags:
+      - photos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhotoEcriture'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PhotoEcriture'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PhotoEcriture'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoEcriture'
+          description: ''
+    patch:
+      operationId: photos_partial_update
+      description: Upload et suppression des photos d'un profil (multipart).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) photo.
+        required: true
+      tags:
+      - photos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPhotoEcriture'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPhotoEcriture'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPhotoEcriture'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoEcriture'
+          description: ''
+    delete:
+      operationId: photos_destroy
+      description: Upload et suppression des photos d'un profil (multipart).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) photo.
+        required: true
+      tags:
+      - photos
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/prestations/:
+    get:
+      operationId: prestations_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - prestations
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TypePrestation'
+          description: ''
+  /api/prestations/{id}/:
+    get:
+      operationId: prestations_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) type de prestation.
+        required: true
+      tags:
+      - prestations
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypePrestation'
+          description: ''
+  /api/profils/:
+    get:
+      operationId: profils_list
+      description: |-
+        Recherche à facettes, consultation et saisie d'un profil.
+
+        `ensure_csrf_cookie` sur la liste : le front récupère le cookie CSRF en
+        affichant la planche, avant tout envoi de formulaire.
+      parameters:
+      - in: query
+        name: accent
+        schema:
+          type: string
+      - in: query
+        name: actif
+        schema:
+          type: boolean
+      - in: query
+        name: age_max
+        schema:
+          type: number
+      - in: query
+        name: age_min
+        schema:
+          type: number
+      - in: query
+        name: apparence
+        schema:
+          type: string
+      - in: query
+        name: avec_photo
+        schema:
+          type: boolean
+      - in: query
+        name: barbe
+        schema:
+          type: boolean
+      - in: query
+        name: besoin_transport
+        schema:
+          type: boolean
+      - in: query
+        name: calvitie
+        schema:
+          type: string
+          enum:
+          - chauve
+          - degarni
+          - non
+        description: |-
+          * `non` - Non
+          * `degarni` - Dégarni
+          * `chauve` - Chauve
+      - in: query
+        name: cheveux_colores
+        schema:
+          type: boolean
+      - in: query
+        name: competence_artistique
+        schema:
+          type: string
+        description: Compétence artistique, éventuellement `Compétence:niveau_min`
+          (1→4)
+      - in: query
+        name: competence_conduite
+        schema:
+          type: string
+      - in: query
+        name: competence_particuliere
+        schema:
+          type: string
+      - in: query
+        name: composition
+        schema:
+          type: string
+          enum:
+          - amis
+          - couple
+          - duo
+          - famille
+          - fratrie
+          - groupe_pro
+          - groupe_sportif
+          - seul
+          - trio
+        description: |-
+          * `seul` - Seul
+          * `couple` - Couple
+          * `fratrie` - Fratrie
+          * `famille` - Famille
+          * `amis` - Groupe d'amis
+          * `duo` - Duo
+          * `trio` - Trio
+          * `groupe_sportif` - Groupe sportif
+          * `groupe_pro` - Groupe professionnel
+      - in: query
+        name: costume
+        schema:
+          type: string
+      - in: query
+        name: couleur_cheveux
+        schema:
+          type: string
+          enum:
+          - blanc
+          - blond
+          - brun
+          - chatain
+          - colore
+          - gris
+          - noir
+          - roux
+        description: |-
+          * `blond` - Blond
+          * `chatain` - Châtain
+          * `brun` - Brun
+          * `noir` - Noir
+          * `roux` - Roux
+          * `gris` - Gris
+          * `blanc` - Blanc
+          * `colore` - Coloré (fantaisie)
+      - in: query
+        name: couleur_yeux
+        schema:
+          type: string
+          enum:
+          - bleu
+          - gris
+          - marron
+          - noir
+          - noisette
+          - vert
+        description: |-
+          * `marron` - Marron
+          * `bleu` - Bleu
+          * `vert` - Vert
+          * `noisette` - Noisette
+          * `gris` - Gris
+          * `noir` - Noir
+      - in: query
+        name: deja_figurant
+        schema:
+          type: boolean
+      - in: query
+        name: departement
+        schema:
+          type: string
+      - in: query
+        name: disponibilite
+        schema:
+          type: string
+          enum:
+          - immediate
+          - sous_48h
+          - sur_demande
+          - vacances
+          - week_ends
+        description: |-
+          * `immediate` - Immédiate
+          * `sous_48h` - Sous 48 h
+          * `week_ends` - Week-ends uniquement
+          * `vacances` - Vacances scolaires
+          * `sur_demande` - Sur demande
+      - in: query
+        name: distance_max_km_min
+        schema:
+          type: integer
+      - in: query
+        name: instrument
+        schema:
+          type: string
+        description: Instrument, éventuellement `Instrument:niveau_min` (1→4)
+      - in: query
+        name: langue
+        schema:
+          type: string
+        description: Langue, éventuellement `Langue:niveau_min` (A1→C2, LM)
+      - in: query
+        name: lentilles
+        schema:
+          type: boolean
+      - in: query
+        name: longueur_cheveux
+        schema:
+          type: string
+          enum:
+          - courts
+          - longs
+          - mi_longs
+        description: |-
+          * `courts` - Courts
+          * `mi_longs` - Mi-longs
+          * `longs` - Longs
+      - in: query
+        name: lunettes
+        schema:
+          type: boolean
+      - in: query
+        name: metier
+        schema:
+          type: string
+      - in: query
+        name: mineur
+        schema:
+          type: boolean
+      - in: query
+        name: moustache
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: Un numéro de page de l'ensemble des résultats.
+        schema:
+          type: integer
+      - in: query
+        name: parait_age
+        schema:
+          type: number
+        description: Âge apparent contenant cette valeur
+      - in: query
+        name: permis
+        schema:
+          type: string
+      - in: query
+        name: peut_dormir_sur_place
+        schema:
+          type: boolean
+      - in: query
+        name: piercings
+        schema:
+          type: boolean
+      - in: query
+        name: prestation
+        schema:
+          type: string
+      - in: query
+        name: profil_multiculturel
+        schema:
+          type: boolean
+      - in: query
+        name: q
+        schema:
+          type: string
+        description: Nom, prénom ou nom d'artiste
+      - in: query
+        name: region
+        schema:
+          type: string
+      - in: query
+        name: registre
+        schema:
+          type: string
+      - in: query
+        name: sexe
+        schema:
+          type: string
+          enum:
+          - A
+          - F
+          - H
+        description: |-
+          * `H` - Homme
+          * `F` - Femme
+          * `A` - Autre
+      - in: query
+        name: sport
+        schema:
+          type: string
+        description: Sport, éventuellement `Sport:niveau_min` (1→5)
+      - in: query
+        name: taille_max
+        schema:
+          type: integer
+      - in: query
+        name: taille_min
+        schema:
+          type: integer
+      - in: query
+        name: tatouages_visibles
+        schema:
+          type: boolean
+      - in: query
+        name: type_cheveux
+        schema:
+          type: string
+          enum:
+          - boucles
+          - crepus
+          - ondules
+          - raides
+        description: |-
+          * `raides` - Raides
+          * `ondules` - Ondulés
+          * `boucles` - Bouclés
+          * `crepus` - Crépus
+      - in: query
+        name: type_experience
+        schema:
+          type: string
+      - in: query
+        name: vehicule_personnel_disponible
+        schema:
+          type: boolean
+      - in: query
+        name: ville
+        schema:
+          type: string
+      - in: query
+        name: zone_mobilite
+        schema:
+          type: string
+      tags:
+      - profils
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProfilListeList'
+          description: ''
+    post:
+      operationId: profils_create
+      description: |-
+        Recherche à facettes, consultation et saisie d'un profil.
+
+        `ensure_csrf_cookie` sur la liste : le front récupère le cookie CSRF en
+        affichant la planche, avant tout envoi de formulaire.
+      tags:
+      - profils
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfilEcriture'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProfilEcriture'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProfilEcriture'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfilEcriture'
+          description: ''
+  /api/profils/{id}/:
+    get:
+      operationId: profils_retrieve
+      description: |-
+        Recherche à facettes, consultation et saisie d'un profil.
+
+        `ensure_csrf_cookie` sur la liste : le front récupère le cookie CSRF en
+        affichant la planche, avant tout envoi de formulaire.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) profil.
+        required: true
+      tags:
+      - profils
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfilDetail'
+          description: ''
+    put:
+      operationId: profils_update
+      description: |-
+        Recherche à facettes, consultation et saisie d'un profil.
+
+        `ensure_csrf_cookie` sur la liste : le front récupère le cookie CSRF en
+        affichant la planche, avant tout envoi de formulaire.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) profil.
+        required: true
+      tags:
+      - profils
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfilEcriture'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProfilEcriture'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProfilEcriture'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfilEcriture'
+          description: ''
+    patch:
+      operationId: profils_partial_update
+      description: |-
+        Recherche à facettes, consultation et saisie d'un profil.
+
+        `ensure_csrf_cookie` sur la liste : le front récupère le cookie CSRF en
+        affichant la planche, avant tout envoi de formulaire.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) profil.
+        required: true
+      tags:
+      - profils
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProfilEcriture'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProfilEcriture'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProfilEcriture'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfilEcriture'
+          description: ''
+    delete:
+      operationId: profils_destroy
+      description: |-
+        Recherche à facettes, consultation et saisie d'un profil.
+
+        `ensure_csrf_cookie` sur la liste : le front récupère le cookie CSRF en
+        affichant la planche, avant tout envoi de formulaire.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) profil.
+        required: true
+      tags:
+      - profils
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/registres/:
+    get:
+      operationId: registres_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - registres
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Registre'
+          description: ''
+  /api/registres/{id}/:
+    get:
+      operationId: registres_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) registre.
+        required: true
+      tags:
+      - registres
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Registre'
+          description: ''
+  /api/session/:
+    get:
+      operationId: session_retrieve
+      description: |-
+        Qui est connecté, et pose le cookie CSRF.
+
+        Ouverte en anonyme à dessein : la page de connexion a besoin du cookie CSRF
+        pour poster, et elle ne peut pas l'obtenir d'un endpoint qui la rejette.
+        Ne divulgue rien d'autre que « personne n'est connecté ».
+      tags:
+      - session
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+          description: ''
+  /api/sports/:
+    get:
+      operationId: sports_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - sports
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sport'
+          description: ''
+  /api/sports/{id}/:
+    get:
+      operationId: sports_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) sport.
+        required: true
+      tags:
+      - sports
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sport'
+          description: ''
+  /api/types-experience/:
+    get:
+      operationId: types_experience_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - types-experience
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TypeExperience'
+          description: ''
+  /api/types-experience/{id}/:
+    get:
+      operationId: types_experience_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) type d'expérience.
+        required: true
+      tags:
+      - types-experience
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypeExperience'
+          description: ''
+  /api/types-vehicule/:
+    get:
+      operationId: types_vehicule_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - types-vehicule
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TypeVehicule'
+          description: ''
+  /api/types-vehicule/{id}/:
+    get:
+      operationId: types_vehicule_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) type de véhicule.
+        required: true
+      tags:
+      - types-vehicule
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypeVehicule'
+          description: ''
+  /api/zones-mobilite/:
+    get:
+      operationId: zones_mobilite_list
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Quel champ utiliser pour classer les résultats.
+        schema:
+          type: string
+      tags:
+      - zones-mobilite
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ZoneMobilite'
+          description: ''
+  /api/zones-mobilite/{id}/:
+    get:
+      operationId: zones_mobilite_retrieve
+      description: Listes qui alimentent le rail de filtres.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un(une) valeur entière unique identifiant ce(cette) zone de mobilité.
+        required: true
+      tags:
+      - zones-mobilite
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZoneMobilite'
+          description: ''
+components:
+  schemas:
+    Accent:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    Apparence:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    BlankEnum:
+      enum:
+      - ''
+    CalvitieEnum:
+      enum:
+      - non
+      - degarni
+      - chauve
+      type: string
+      description: |-
+        * `non` - Non
+        * `degarni` - Dégarni
+        * `chauve` - Chauve
+    CategorieEnum:
+      enum:
+      - collectif
+      - individuel
+      type: string
+      description: |-
+        * `collectif` - Sport collectif
+        * `individuel` - Sport individuel
+    CompetenceArtistique:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    CompetenceArtistiqueEcriture:
+      type: object
+      description: Une ligne de through model telle que la poste le formulaire.
+      properties:
+        niveau:
+          type: string
+        competence:
+          type: integer
+      required:
+      - competence
+      - niveau
+    CompetenceConduite:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    CompetenceParticuliere:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    CompositionEnum:
+      enum:
+      - seul
+      - couple
+      - fratrie
+      - famille
+      - amis
+      - duo
+      - trio
+      - groupe_sportif
+      - groupe_pro
+      type: string
+      description: |-
+        * `seul` - Seul
+        * `couple` - Couple
+        * `fratrie` - Fratrie
+        * `famille` - Famille
+        * `amis` - Groupe d'amis
+        * `duo` - Duo
+        * `trio` - Trio
+        * `groupe_sportif` - Groupe sportif
+        * `groupe_pro` - Groupe professionnel
+    Connexion:
+      type: object
+      properties:
+        identifiant:
+          type: string
+          writeOnly: true
+        mot_de_passe:
+          type: string
+          writeOnly: true
+      required:
+      - identifiant
+      - mot_de_passe
+    Costume:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    CouleurCheveuxEnum:
+      enum:
+      - blond
+      - chatain
+      - brun
+      - noir
+      - roux
+      - gris
+      - blanc
+      - colore
+      type: string
+      description: |-
+        * `blond` - Blond
+        * `chatain` - Châtain
+        * `brun` - Brun
+        * `noir` - Noir
+        * `roux` - Roux
+        * `gris` - Gris
+        * `blanc` - Blanc
+        * `colore` - Coloré (fantaisie)
+    CouleurYeuxEnum:
+      enum:
+      - marron
+      - bleu
+      - vert
+      - noisette
+      - gris
+      - noir
+      type: string
+      description: |-
+        * `marron` - Marron
+        * `bleu` - Bleu
+        * `vert` - Vert
+        * `noisette` - Noisette
+        * `gris` - Gris
+        * `noir` - Noir
+    Departement:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          maxLength: 3
+        nom:
+          type: string
+          maxLength: 120
+        region:
+          type: string
+          readOnly: true
+      required:
+      - code
+      - id
+      - nom
+      - region
+    DisponibiliteEnum:
+      enum:
+      - immediate
+      - sous_48h
+      - week_ends
+      - vacances
+      - sur_demande
+      type: string
+      description: |-
+        * `immediate` - Immédiate
+        * `sous_48h` - Sous 48 h
+        * `week_ends` - Week-ends uniquement
+        * `vacances` - Vacances scolaires
+        * `sur_demande` - Sur demande
+    DisponibiliteScolaireEnum:
+      enum:
+      - vacances
+      - mercredi
+      - hors_scolaire
+      - sans_contrainte
+      type: string
+      description: |-
+        * `vacances` - Vacances scolaires uniquement
+        * `mercredi` - Mercredi et week-ends
+        * `hors_scolaire` - Hors temps scolaire
+        * `sans_contrainte` - Sans contrainte particulière
+    Instrument:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    InstrumentEcriture:
+      type: object
+      description: Une ligne de through model telle que la poste le formulaire.
+      properties:
+        niveau:
+          type: string
+        instrument:
+          type: integer
+      required:
+      - instrument
+      - niveau
+    Langue:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    LangueEcriture:
+      type: object
+      description: Une ligne de through model telle que la poste le formulaire.
+      properties:
+        niveau:
+          type: string
+        langue:
+          type: integer
+        accent:
+          type: integer
+          nullable: true
+      required:
+      - langue
+      - niveau
+    LongueurCheveuxEnum:
+      enum:
+      - courts
+      - mi_longs
+      - longs
+      type: string
+      description: |-
+        * `courts` - Courts
+        * `mi_longs` - Mi-longs
+        * `longs` - Longs
+    Metier:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    Mineur:
+      type: object
+      description: |-
+        Présence d'un dossier mineur, sans exposer l'identité du responsable légal
+        dans une réponse de recherche.
+      properties:
+        autorisation_parentale_signee:
+          type: boolean
+          readOnly: true
+        autorisation_travail_obtenue:
+          type: boolean
+          readOnly: true
+        disponibilite_scolaire:
+          type: string
+          readOnly: true
+      required:
+      - autorisation_parentale_signee
+      - autorisation_travail_obtenue
+      - disponibilite_scolaire
+    MineurEcriture:
+      type: object
+      properties:
+        responsable_legal_nom:
+          type: string
+          maxLength: 150
+        responsable_legal_prenom:
+          type: string
+          maxLength: 150
+        responsable_legal_lien:
+          $ref: '#/components/schemas/ResponsableLegalLienEnum'
+        responsable_legal_telephone:
+          type: string
+          maxLength: 30
+        responsable_legal_email:
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
+        autorisation_parentale_signee:
+          type: boolean
+        autorisation_parentale_le:
+          type: string
+          format: date
+          nullable: true
+        autorisation_travail_obtenue:
+          type: boolean
+        autorisation_travail_reference:
+          type: string
+          maxLength: 100
+        autorisation_travail_expire_le:
+          type: string
+          format: date
+          nullable: true
+        disponibilite_scolaire:
+          oneOf:
+          - $ref: '#/components/schemas/DisponibiliteScolaireEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        remarques: {}
+      required:
+      - responsable_legal_lien
+      - responsable_legal_nom
+      - responsable_legal_prenom
+    PaginatedProfilListeList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfilListe'
+    PatchedPhotoEcriture:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        profil:
+          type: integer
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        image:
+          type: string
+          format: uri
+        prise_le:
+          type: string
+          format: date
+          nullable: true
+    PatchedProfilEcriture:
+      type: object
+      description: |-
+        Saisie d'un profil depuis le front (voir decisions/0001).
+
+        Les through models arrivent en listes imbriquées ; DRF ne sait pas les écrire
+        seul, d'où le `create`/`update` explicite plus bas.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sports:
+          type: array
+          items:
+            $ref: '#/components/schemas/SportEcriture'
+          writeOnly: true
+        langues:
+          type: array
+          items:
+            $ref: '#/components/schemas/LangueEcriture'
+          writeOnly: true
+        instruments:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstrumentEcriture'
+          writeOnly: true
+        competences_artistiques:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompetenceArtistiqueEcriture'
+          writeOnly: true
+        vehicules:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehiculeEcriture'
+          writeOnly: true
+        mineur:
+          allOf:
+          - $ref: '#/components/schemas/MineurEcriture'
+          writeOnly: true
+          nullable: true
+        reference:
+          type: string
+          nullable: true
+          maxLength: 20
+        nom:
+          type: string
+          maxLength: 150
+        prenom:
+          type: string
+          maxLength: 150
+        nom_artiste:
+          type: string
+          maxLength: 150
+        sexe:
+          oneOf:
+          - $ref: '#/components/schemas/SexeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        date_naissance:
+          type: string
+          format: date
+          nullable: true
+        age_apparent_min:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        age_apparent_max:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        telephone:
+          type: string
+          maxLength: 30
+        email:
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
+        disponibilite:
+          oneOf:
+          - $ref: '#/components/schemas/DisponibiliteEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        deja_figurant:
+          type: boolean
+        nombre_tournages:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        taille_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        poids_kg:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        pointure:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        taille_vetement:
+          oneOf:
+          - $ref: '#/components/schemas/TailleVetementEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        taille_pantalon:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        tour_poitrine_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        tour_taille_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        tour_hanches_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        couleur_yeux:
+          oneOf:
+          - $ref: '#/components/schemas/CouleurYeuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        couleur_cheveux:
+          oneOf:
+          - $ref: '#/components/schemas/CouleurCheveuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        type_cheveux:
+          oneOf:
+          - $ref: '#/components/schemas/TypeCheveuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        longueur_cheveux:
+          oneOf:
+          - $ref: '#/components/schemas/LongueurCheveuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        cheveux_colores:
+          type: boolean
+        barbe:
+          type: boolean
+        moustache:
+          type: boolean
+        calvitie:
+          oneOf:
+          - $ref: '#/components/schemas/CalvitieEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        tatouages_visibles:
+          type: boolean
+        piercings:
+          type: boolean
+        lunettes:
+          type: boolean
+        lentilles:
+          type: boolean
+        profil_multiculturel:
+          type: boolean
+        composition:
+          oneOf:
+          - $ref: '#/components/schemas/CompositionEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        ville:
+          type: string
+          maxLength: 120
+        distance_max_km:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        peut_dormir_sur_place:
+          type: boolean
+        vehicule_personnel_disponible:
+          type: boolean
+        besoin_transport:
+          type: boolean
+        consentement_obtenu_le:
+          type: string
+          format: date
+          nullable: true
+        source_consentement:
+          type: string
+          maxLength: 200
+        actif:
+          type: boolean
+        reseaux_sociaux: {}
+        autres_caracteristiques: {}
+        notes: {}
+        departement:
+          type: integer
+          nullable: true
+        registres:
+          type: array
+          items:
+            type: integer
+        apparences:
+          type: array
+          items:
+            type: integer
+        permis:
+          type: array
+          items:
+            type: integer
+        competences_conduite:
+          type: array
+          items:
+            type: integer
+        metiers:
+          type: array
+          items:
+            type: integer
+        competences_particulieres:
+          type: array
+          items:
+            type: integer
+        costumes:
+          type: array
+          items:
+            type: integer
+        zones_mobilite:
+          type: array
+          items:
+            type: integer
+        types_experience:
+          type: array
+          items:
+            type: integer
+        prestations_acceptees:
+          type: array
+          items:
+            type: integer
+    Permis:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          maxLength: 10
+        libelle:
+          type: string
+          maxLength: 120
+      required:
+      - code
+      - id
+    Photo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        type_libelle:
+          type: string
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+        prise_le:
+          type: string
+          format: date
+          nullable: true
+      required:
+      - id
+      - type
+      - type_libelle
+      - url
+    PhotoEcriture:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        profil:
+          type: integer
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        image:
+          type: string
+          format: uri
+        prise_le:
+          type: string
+          format: date
+          nullable: true
+      required:
+      - id
+      - image
+      - profil
+      - type
+    ProfilCompetenceArtistique:
+      type: object
+      properties:
+        competence:
+          type: string
+          readOnly: true
+        niveau:
+          $ref: '#/components/schemas/ProfilCompetenceArtistiqueNiveauEnum'
+        niveau_libelle:
+          type: string
+          readOnly: true
+      required:
+      - competence
+      - niveau
+      - niveau_libelle
+    ProfilCompetenceArtistiqueNiveauEnum:
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      type: string
+      description: |-
+        * `1` - Débutant
+        * `2` - Amateur
+        * `3` - Confirmé
+        * `4` - Professionnel
+    ProfilDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        reference:
+          type: string
+          nullable: true
+          maxLength: 20
+        prenom:
+          type: string
+          maxLength: 150
+        nom:
+          type: string
+          maxLength: 150
+        nom_artiste:
+          type: string
+          maxLength: 150
+        sexe:
+          oneOf:
+          - $ref: '#/components/schemas/SexeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        age:
+          type: integer
+          readOnly: true
+        est_mineur:
+          type: boolean
+          readOnly: true
+        age_apparent_min:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        age_apparent_max:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        telephone:
+          type: string
+          maxLength: 30
+        email:
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
+        ville:
+          type: string
+          maxLength: 120
+        departement:
+          allOf:
+          - $ref: '#/components/schemas/Departement'
+          readOnly: true
+        distance_max_km:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        peut_dormir_sur_place:
+          type: boolean
+        vehicule_personnel_disponible:
+          type: boolean
+        besoin_transport:
+          type: boolean
+        taille_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        poids_kg:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        pointure:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        taille_vetement:
+          oneOf:
+          - $ref: '#/components/schemas/TailleVetementEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        taille_pantalon:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        tour_poitrine_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        tour_taille_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        tour_hanches_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        couleur_yeux:
+          oneOf:
+          - $ref: '#/components/schemas/CouleurYeuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        couleur_cheveux:
+          oneOf:
+          - $ref: '#/components/schemas/CouleurCheveuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        type_cheveux:
+          oneOf:
+          - $ref: '#/components/schemas/TypeCheveuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        longueur_cheveux:
+          oneOf:
+          - $ref: '#/components/schemas/LongueurCheveuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        cheveux_colores:
+          type: boolean
+        barbe:
+          type: boolean
+        moustache:
+          type: boolean
+        calvitie:
+          oneOf:
+          - $ref: '#/components/schemas/CalvitieEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        tatouages_visibles:
+          type: boolean
+        piercings:
+          type: boolean
+        lunettes:
+          type: boolean
+        lentilles:
+          type: boolean
+        profil_multiculturel:
+          type: boolean
+        composition:
+          oneOf:
+          - $ref: '#/components/schemas/CompositionEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        disponibilite:
+          oneOf:
+          - $ref: '#/components/schemas/DisponibiliteEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        deja_figurant:
+          type: boolean
+        nombre_tournages:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        apparences:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        registres:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        metiers:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        competences_particulieres:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        costumes:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        zones_mobilite:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        types_experience:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        prestations_acceptees:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        competences_conduite:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        permis:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        sports:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfilSport'
+          readOnly: true
+        competences_artistiques:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfilCompetenceArtistique'
+          readOnly: true
+        instruments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfilInstrument'
+          readOnly: true
+        langues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfilLangue'
+          readOnly: true
+        vehicules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfilVehicule'
+          readOnly: true
+        photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Photo'
+          readOnly: true
+        mineur:
+          allOf:
+          - $ref: '#/components/schemas/Mineur'
+          readOnly: true
+        reseaux_sociaux: {}
+        autres_caracteristiques: {}
+      required:
+      - age
+      - apparences
+      - competences_artistiques
+      - competences_conduite
+      - competences_particulieres
+      - costumes
+      - departement
+      - est_mineur
+      - id
+      - instruments
+      - langues
+      - metiers
+      - mineur
+      - nom
+      - permis
+      - photos
+      - prenom
+      - prestations_acceptees
+      - registres
+      - sports
+      - types_experience
+      - vehicules
+      - zones_mobilite
+    ProfilEcriture:
+      type: object
+      description: |-
+        Saisie d'un profil depuis le front (voir decisions/0001).
+
+        Les through models arrivent en listes imbriquées ; DRF ne sait pas les écrire
+        seul, d'où le `create`/`update` explicite plus bas.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sports:
+          type: array
+          items:
+            $ref: '#/components/schemas/SportEcriture'
+          writeOnly: true
+        langues:
+          type: array
+          items:
+            $ref: '#/components/schemas/LangueEcriture'
+          writeOnly: true
+        instruments:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstrumentEcriture'
+          writeOnly: true
+        competences_artistiques:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompetenceArtistiqueEcriture'
+          writeOnly: true
+        vehicules:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehiculeEcriture'
+          writeOnly: true
+        mineur:
+          allOf:
+          - $ref: '#/components/schemas/MineurEcriture'
+          writeOnly: true
+          nullable: true
+        reference:
+          type: string
+          nullable: true
+          maxLength: 20
+        nom:
+          type: string
+          maxLength: 150
+        prenom:
+          type: string
+          maxLength: 150
+        nom_artiste:
+          type: string
+          maxLength: 150
+        sexe:
+          oneOf:
+          - $ref: '#/components/schemas/SexeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        date_naissance:
+          type: string
+          format: date
+          nullable: true
+        age_apparent_min:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        age_apparent_max:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        telephone:
+          type: string
+          maxLength: 30
+        email:
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
+        disponibilite:
+          oneOf:
+          - $ref: '#/components/schemas/DisponibiliteEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        deja_figurant:
+          type: boolean
+        nombre_tournages:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        taille_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        poids_kg:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        pointure:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        taille_vetement:
+          oneOf:
+          - $ref: '#/components/schemas/TailleVetementEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        taille_pantalon:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        tour_poitrine_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        tour_taille_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        tour_hanches_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        couleur_yeux:
+          oneOf:
+          - $ref: '#/components/schemas/CouleurYeuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        couleur_cheveux:
+          oneOf:
+          - $ref: '#/components/schemas/CouleurCheveuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        type_cheveux:
+          oneOf:
+          - $ref: '#/components/schemas/TypeCheveuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        longueur_cheveux:
+          oneOf:
+          - $ref: '#/components/schemas/LongueurCheveuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        cheveux_colores:
+          type: boolean
+        barbe:
+          type: boolean
+        moustache:
+          type: boolean
+        calvitie:
+          oneOf:
+          - $ref: '#/components/schemas/CalvitieEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        tatouages_visibles:
+          type: boolean
+        piercings:
+          type: boolean
+        lunettes:
+          type: boolean
+        lentilles:
+          type: boolean
+        profil_multiculturel:
+          type: boolean
+        composition:
+          oneOf:
+          - $ref: '#/components/schemas/CompositionEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        ville:
+          type: string
+          maxLength: 120
+        distance_max_km:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        peut_dormir_sur_place:
+          type: boolean
+        vehicule_personnel_disponible:
+          type: boolean
+        besoin_transport:
+          type: boolean
+        consentement_obtenu_le:
+          type: string
+          format: date
+          nullable: true
+        source_consentement:
+          type: string
+          maxLength: 200
+        actif:
+          type: boolean
+        reseaux_sociaux: {}
+        autres_caracteristiques: {}
+        notes: {}
+        departement:
+          type: integer
+          nullable: true
+        registres:
+          type: array
+          items:
+            type: integer
+        apparences:
+          type: array
+          items:
+            type: integer
+        permis:
+          type: array
+          items:
+            type: integer
+        competences_conduite:
+          type: array
+          items:
+            type: integer
+        metiers:
+          type: array
+          items:
+            type: integer
+        competences_particulieres:
+          type: array
+          items:
+            type: integer
+        costumes:
+          type: array
+          items:
+            type: integer
+        zones_mobilite:
+          type: array
+          items:
+            type: integer
+        types_experience:
+          type: array
+          items:
+            type: integer
+        prestations_acceptees:
+          type: array
+          items:
+            type: integer
+      required:
+      - id
+      - nom
+      - prenom
+    ProfilInstrument:
+      type: object
+      properties:
+        instrument:
+          type: string
+          readOnly: true
+        niveau:
+          $ref: '#/components/schemas/ProfilInstrumentNiveauEnum'
+        niveau_libelle:
+          type: string
+          readOnly: true
+      required:
+      - instrument
+      - niveau
+      - niveau_libelle
+    ProfilInstrumentNiveauEnum:
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      type: string
+      description: |-
+        * `1` - Débutant
+        * `2` - Intermédiaire
+        * `3` - Avancé
+        * `4` - Professionnel
+    ProfilLangue:
+      type: object
+      properties:
+        langue:
+          type: string
+          readOnly: true
+        niveau:
+          $ref: '#/components/schemas/ProfilLangueNiveauEnum'
+        niveau_libelle:
+          type: string
+          readOnly: true
+        accent:
+          type: string
+          readOnly: true
+      required:
+      - accent
+      - langue
+      - niveau
+      - niveau_libelle
+    ProfilLangueNiveauEnum:
+      enum:
+      - A1
+      - A2
+      - B1
+      - B2
+      - C1
+      - C2
+      - LM
+      type: string
+      description: |-
+        * `A1` - A1 — Découverte
+        * `A2` - A2 — Intermédiaire
+        * `B1` - B1 — Seuil
+        * `B2` - B2 — Avancé
+        * `C1` - C1 — Autonome
+        * `C2` - C2 — Maîtrise
+        * `LM` - Langue maternelle
+    ProfilListe:
+      type: object
+      description: |-
+        Ce qu'affiche une comp card sur la planche : portrait, vitals, apparences.
+
+        Volontairement sans coordonnées ni date de naissance : la liste sert à
+        repérer un profil, pas à le contacter. L'âge est dérivé, la date reste au détail.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        reference:
+          type: string
+          nullable: true
+          maxLength: 20
+        prenom:
+          type: string
+          maxLength: 150
+        nom:
+          type: string
+          maxLength: 150
+        nom_artiste:
+          type: string
+          maxLength: 150
+        sexe:
+          oneOf:
+          - $ref: '#/components/schemas/SexeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        age:
+          type: integer
+          readOnly: true
+        ville:
+          type: string
+          maxLength: 120
+        departement:
+          type: string
+          readOnly: true
+        taille_cm:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        couleur_yeux:
+          oneOf:
+          - $ref: '#/components/schemas/CouleurYeuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        couleur_cheveux:
+          oneOf:
+          - $ref: '#/components/schemas/CouleurCheveuxEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        apparences:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Photo'
+          readOnly: true
+      required:
+      - age
+      - apparences
+      - departement
+      - id
+      - nom
+      - photos
+      - prenom
+    ProfilSport:
+      type: object
+      properties:
+        sport:
+          type: string
+          readOnly: true
+        niveau:
+          $ref: '#/components/schemas/ProfilSportNiveauEnum'
+        niveau_libelle:
+          type: string
+          readOnly: true
+      required:
+      - niveau
+      - niveau_libelle
+      - sport
+    ProfilSportNiveauEnum:
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+      type: string
+      description: |-
+        * `1` - Débutant
+        * `2` - Amateur
+        * `3` - Confirmé
+        * `4` - Compétition
+        * `5` - Professionnel
+    ProfilVehicule:
+      type: object
+      properties:
+        type_vehicule:
+          type: string
+          readOnly: true
+        marque:
+          type: string
+          maxLength: 80
+        modele:
+          type: string
+          maxLength: 80
+        annee:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+      required:
+      - type_vehicule
+    Registre:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    ResponsableLegalLienEnum:
+      enum:
+      - mere
+      - pere
+      - tuteur
+      type: string
+      description: |-
+        * `mere` - Mère
+        * `pere` - Père
+        * `tuteur` - Tuteur légal
+    Session:
+      type: object
+      description: |-
+        Réponse de /api/session/ — déclarée pour que le contrat la documente.
+
+        `utilisateur` vaut null quand personne n'est connecté : l'endpoint reste
+        accessible en anonyme, car c'est lui qui pose le cookie CSRF dont la page de
+        connexion a besoin pour poster.
+      properties:
+        utilisateur:
+          type: string
+          readOnly: true
+          nullable: true
+        peut_saisir:
+          type: boolean
+          readOnly: true
+      required:
+      - peut_saisir
+      - utilisateur
+    SexeEnum:
+      enum:
+      - H
+      - F
+      - A
+      type: string
+      description: |-
+        * `H` - Homme
+        * `F` - Femme
+        * `A` - Autre
+    Sport:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+        categorie:
+          oneOf:
+          - $ref: '#/components/schemas/CategorieEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+      required:
+      - id
+      - nom
+    SportEcriture:
+      type: object
+      description: Une ligne de through model telle que la poste le formulaire.
+      properties:
+        niveau:
+          type: string
+        sport:
+          type: integer
+      required:
+      - niveau
+      - sport
+    TailleVetementEnum:
+      enum:
+      - XS
+      - S
+      - M
+      - L
+      - XL
+      - XXL
+      - XXXL
+      type: string
+      description: |-
+        * `XS` - XS
+        * `S` - S
+        * `M` - M
+        * `L` - L
+        * `XL` - XL
+        * `XXL` - XXL
+        * `XXXL` - XXXL
+    TypeCheveuxEnum:
+      enum:
+      - raides
+      - ondules
+      - boucles
+      - crepus
+      type: string
+      description: |-
+        * `raides` - Raides
+        * `ondules` - Ondulés
+        * `boucles` - Bouclés
+        * `crepus` - Crépus
+    TypeEnum:
+      enum:
+      - portrait
+      - pied
+      - profil
+      - recente
+      - sans_lunettes
+      - avec_lunettes
+      - cheveux_actuels
+      - avec_barbe
+      - sans_barbe
+      type: string
+      description: |-
+        * `portrait` - Portrait
+        * `pied` - En pied
+        * `profil` - Profil
+        * `recente` - Photo récente
+        * `sans_lunettes` - Sans lunettes
+        * `avec_lunettes` - Avec lunettes
+        * `cheveux_actuels` - Cheveux actuels
+        * `avec_barbe` - Avec barbe
+        * `sans_barbe` - Sans barbe
+    TypeExperience:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    TypePrestation:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    TypeVehicule:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+    VehiculeEcriture:
+      type: object
+      properties:
+        type_vehicule:
+          type: integer
+        marque:
+          type: string
+        modele:
+          type: string
+        annee:
+          type: integer
+          nullable: true
+      required:
+      - type_vehicule
+    ZoneMobilite:
+      type: object
+      description: Alimente les listes du rail de filtres.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - nom
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

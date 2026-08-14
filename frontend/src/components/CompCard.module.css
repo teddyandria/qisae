@@ -1,0 +1,256 @@
+.carte {
+  position: relative;
+  background: var(--tirage);
+  color: var(--encre-inverse);
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: column;
+  /* Arrivée en cascade : l'index de la carte décale son apparition. */
+  animation: arrivee var(--transition-lente) both;
+  animation-delay: calc(var(--index, 0) * 22ms);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    border-color var(--transition);
+}
+
+.carte:hover {
+  transform: translateY(-3px);
+  border-color: var(--ligne-claire);
+  box-shadow:
+    0 10px 26px rgba(0, 0, 0, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.carte[data-select="true"] {
+  border-color: var(--chinagraphe);
+  box-shadow:
+    0 0 0 1px var(--chinagraphe),
+    0 10px 30px rgba(75, 107, 255, 0.28);
+}
+
+.zoneSelect {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.cadre {
+  display: block;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--tirage-ombre);
+}
+
+.cadre img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-lente);
+}
+
+/* Léger rapprochement au survol : le portrait est le sujet, il prend la lumière. */
+.carte:hover .cadre img {
+  transform: scale(1.03);
+}
+
+.sansPhoto {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--annotation-claire);
+}
+
+.badgeMineur {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--statut-mineur);
+  color: var(--sur-accent);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+}
+
+.index {
+  position: absolute;
+  top: 8px;
+  left: 9px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--sur-accent);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.apparence {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 9px 7px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sur-accent);
+  background: linear-gradient(to top, rgba(10, 10, 14, 0.82), transparent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Signature conservée : le cercle au chinagraphe, tracé en une demi-seconde. */
+.cercle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cercle ellipse {
+  fill: none;
+  stroke: var(--chinagraphe);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  animation: tracer 0.5s ease-out forwards;
+  opacity: 0.92;
+}
+
+@keyframes tracer {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cercle ellipse {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .carte:hover {
+    transform: none;
+  }
+  .carte:hover .cadre img {
+    transform: none;
+  }
+}
+
+.identite {
+  padding: 9px 11px 6px;
+}
+
+.nom {
+  font-family: var(--display);
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+.nomArtiste {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--annotation-claire);
+}
+
+.vitals {
+  border-top: 1px solid var(--ligne-claire);
+  padding: 7px 11px 8px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vitals dt {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--annotation-claire);
+}
+
+.vitals dd {
+  margin: 0;
+}
+
+.pied {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 11px 11px;
+}
+
+.modifier {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--chinagraphe-sombre);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  white-space: nowrap;
+  transition: border-color var(--transition);
+}
+
+.modifier:hover {
+  border-bottom-color: currentColor;
+}
+
+.plans {
+  display: flex;
+  gap: 3px;
+}
+
+.plans img {
+  width: 30px;
+  height: 38px;
+  object-fit: cover;
+  border: 1px solid var(--ligne-claire);
+  opacity: 0.85;
+  transition: opacity var(--transition);
+}
+
+.plans img:hover {
+  opacity: 1;
+}
+
+.liensPied {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+/* Le nom est cliquable : c'est le geste naturel pour ouvrir une fiche. */
+a.nom {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a.nom:hover {
+  color: var(--chinagraphe-sombre);
+}

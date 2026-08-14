@@ -1,0 +1,185 @@
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Deux halos très sourds : la salle de projection, pas le néon.
+   Assez faibles pour ne pas teinter la perception de l'écran. */
+.page::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(46% 38% at 22% 18%, rgba(75, 107, 255, 0.1), transparent 70%),
+    radial-gradient(40% 34% at 82% 78%, rgba(75, 107, 255, 0.06), transparent 70%);
+  pointer-events: none;
+}
+
+.panneau {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border: 1px solid var(--ligne);
+  padding: 30px 32px 32px;
+  animation: arrivee var(--transition-lente) both;
+}
+
+/* Amorce de pellicule sur le bord haut du panneau. */
+.perforations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--chinagraphe) 0 12px,
+    transparent 12px 26px
+  );
+  opacity: 0.55;
+}
+
+.marque {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+.pastille {
+  width: 10px;
+  height: 10px;
+  background: var(--chinagraphe);
+  flex: none;
+  animation: respiration 2.4s ease-in-out infinite;
+}
+
+.titre {
+  font-family: var(--display);
+  font-size: 20px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.accroche {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--annotation);
+  margin: 0 0 22px;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 16px;
+}
+
+.champ label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--annotation);
+}
+
+.champ input {
+  border: 1px solid var(--ligne);
+  background: var(--surface-haute);
+  color: var(--encre);
+  padding: 10px 11px;
+  width: 100%;
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    box-shadow var(--transition);
+}
+
+.champ input:hover {
+  border-color: var(--surface-survol);
+}
+
+.champ input:focus {
+  border-color: var(--chinagraphe);
+  background: var(--surface-survol);
+  box-shadow: 0 0 0 3px var(--chinagraphe-doux);
+  outline: none;
+}
+
+.page[data-erreur="true"] .champ input {
+  border-color: var(--statut-mineur);
+}
+
+.erreur {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  border-left: 2px solid var(--statut-mineur);
+  background: rgba(255, 107, 74, 0.08);
+  padding: 9px 11px;
+  margin-bottom: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--statut-mineur);
+  animation: arrivee var(--transition) both;
+}
+
+.bouton {
+  width: 100%;
+  background: var(--chinagraphe-plein);
+  color: var(--sur-accent);
+  border: none;
+  padding: 12px 20px;
+  font-family: var(--display);
+  font-size: 17px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter var(--transition), transform var(--transition);
+}
+
+.bouton:hover:not(:disabled) {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.bouton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.pied {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ligne);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--annotation);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pied a {
+  color: var(--chinagraphe-texte);
+  text-decoration: none;
+}
+
+.pied a:hover {
+  text-decoration: underline;
+}
+
+.deja {
+  margin-bottom: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--statut-ok);
+}

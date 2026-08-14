@@ -1,0 +1,159 @@
+.planche {
+  flex: 1 1 auto;
+  padding: 18px 22px 72px;
+  min-width: 0;
+}
+
+.entete {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.titre {
+  font-family: var(--display);
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.compte {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--annotation);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chargement {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--chinagraphe);
+  animation: respiration 1.1s ease-in-out infinite;
+}
+
+/* Bande de perforations : repère de pellicule en tête de planche. */
+.perforations {
+  height: 12px;
+  margin-bottom: 16px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--ligne) 0 10px,
+    transparent 10px 22px
+  );
+  background-size: 22px 5px;
+  background-position: 0 3px;
+  background-repeat: repeat-x;
+  border-bottom: 1px solid var(--ligne);
+}
+
+.grille {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 1500px) {
+  .grille {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1100px) {
+  .grille {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.etat {
+  border: 1px solid var(--ligne);
+  background: var(--surface);
+  padding: 34px 28px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--annotation);
+  text-align: center;
+  animation: fondu var(--transition-lente) both;
+}
+
+.etat strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--encre);
+  margin-bottom: 8px;
+}
+
+.etat a {
+  color: var(--chinagraphe-texte);
+}
+
+/* Squelettes de chargement : la planche garde sa forme au lieu de sauter. */
+.squelettes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 1500px) {
+  .squelettes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1100px) {
+  .squelettes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.squelette {
+  aspect-ratio: 4 / 5.6;
+  background: var(--surface);
+  border: 1px solid var(--ligne);
+  animation: respiration 1.4s ease-in-out infinite;
+  animation-delay: calc(var(--index, 0) * 60ms);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.pagination button {
+  background: var(--surface);
+  border: 1px solid var(--ligne);
+  color: var(--encre);
+  padding: 6px 12px;
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    color var(--transition),
+    background var(--transition);
+}
+
+.pagination button:hover:not(:disabled) {
+  border-color: var(--chinagraphe);
+  color: var(--chinagraphe-texte);
+  background: var(--chinagraphe-doux);
+}
+
+.pagination button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.selects {
+  color: var(--chinagraphe-texte);
+}

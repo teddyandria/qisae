@@ -1,0 +1,25 @@
+# Déploiement Render — un seul service web qui sert l'API, l'admin et le front.
+# La base est hébergée chez Neon : renseigner DATABASE_URL dans le tableau de bord
+# (valeur non versionnée, c'est un secret).
+services:
+  - type: web
+    name: qisae
+    runtime: python
+    plan: free
+    region: frankfurt
+    buildCommand: "./build.sh"
+    startCommand: "cd backend && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT"
+    healthCheckPath: /api/session/
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13.0"
+      - key: NODE_VERSION
+        value: "22.16.0"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true # Render génère une clé au premier déploiement
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: DATABASE_URL
+        sync: false # à coller depuis Neon
+      - key: CHARGER_DEMO
+        value: "0" # passer à 1 pour charger les 30 profils fictifs

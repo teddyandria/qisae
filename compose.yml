@@ -1,0 +1,30 @@
+# Base de données de développement.
+# Django tourne en local (venv), seul Postgres est conteneurisé — voir
+# docs/conventions-backend.md § « Base de données locale ».
+#
+# Les valeurs par défaut suffisent pour démarrer sans fichier .env ; elles sont
+# alignées sur celles de backend/config/settings.py.
+
+name: qisae
+
+services:
+  db:
+    # Majeure épinglée : elle doit rester alignée sur celle de la production.
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-qisae}
+      POSTGRES_USER: ${POSTGRES_USER:-qisae}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-qisae_dev}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-qisae} -d ${POSTGRES_DB:-qisae}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

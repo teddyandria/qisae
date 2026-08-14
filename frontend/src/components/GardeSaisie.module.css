@@ -1,0 +1,93 @@
+.page {
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 72px 20px;
+  animation: arrivee var(--transition-lente) both;
+}
+
+.carte {
+  background: var(--surface);
+  border: 1px solid var(--ligne);
+  border-left: 2px solid var(--chinagraphe);
+  padding: 26px 28px;
+}
+
+.carte[data-refus="true"] {
+  border-left-color: var(--statut-mineur);
+}
+
+.legende {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--annotation);
+}
+
+.titre {
+  font-family: var(--display);
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 6px 0 12px;
+}
+
+.texte {
+  font-size: 14px;
+  color: var(--annotation);
+  margin: 0 0 20px;
+}
+
+.compte {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--annotation);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.connexion {
+  display: inline-block;
+  background: var(--chinagraphe-plein);
+  color: var(--sur-accent);
+  padding: 9px 20px;
+  font-family: var(--display);
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: filter var(--transition), transform var(--transition);
+}
+
+.connexion:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.retour {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--annotation);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.retour:hover {
+  color: var(--encre);
+}
+
+.attente {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--annotation);
+  padding: 72px 20px;
+  text-align: center;
+  animation: respiration 1.2s ease-in-out infinite;
+}
