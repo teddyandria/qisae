@@ -23,7 +23,12 @@ python manage.py charger_referentiel
 python manage.py creer_admin
 
 # Jeu de démonstration, seulement si demandé (CHARGER_DEMO=1).
+# --reparer-photos tourne à chaque déploiement : la commande de base saute la
+# création si les profils DEMO-* existent déjà (idempotence), mais leurs photos
+# peuvent avoir disparu entre-temps — disque Render effacé, ou bascule vers un
+# nouveau stockage (R2). Sans dégât si tout est déjà en place.
 if [ "${CHARGER_DEMO:-0}" = "1" ]; then
   echo "→ Jeu de démonstration"
   python manage.py charger_demo || true
+  python manage.py charger_demo --reparer-photos
 fi

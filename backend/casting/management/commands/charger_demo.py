@@ -222,10 +222,25 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("--nombre", type=int, default=30)
         parser.add_argument("--reset", action="store_true", help="Supprime les profils DEMO-*")
+        parser.add_argument(
+            "--reparer-photos",
+            action="store_true",
+            help=(
+                "Recrée les photos manquantes des profils DEMO-* existants, sans "
+                "toucher aux profils. Utile après un changement de stockage (ex. "
+                "bascule vers R2) : la base garde les enregistrements Photo mais les "
+                "fichiers de l'ancien stockage n'existent plus dans le nouveau."
+            ),
+        )
 
     @transaction.atomic
     def handle(self, *args, **options):
         anciens = Profil.objects.filter(reference__startswith="DEMO-")
+
+        if options["reparer_photos"]:
+            self._reparer_photos(anciens)
+            return
+
         if options["reset"]:
             nombre_supprimes = anciens.count()
             anciens.delete()
@@ -236,7 +251,8 @@ class Command(BaseCommand):
             self.stdout.write(
                 self.style.WARNING(
                     f"{anciens.count()} profil(s) DEMO existent déjà — relancer avec --reset "
-                    "pour repartir de zéro."
+                    "pour repartir de zéro, ou --reparer-photos pour recréer les photos "
+                    "manquantes sans toucher aux profils."
                 )
             )
             return
@@ -393,4 +409,41 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(f"{crees} profils de démonstration créés (références DEMO-*).")
+        )
+
+    def _reparer_photos(self, profils_demo):
+        """Recrée, sur le storage actif, les photos dont l'enregistrement existe
+        en base mais dont le fichier a disparu — cas d'un disque éphémère (Render)
+        ou d'un changement de moteur de stockage (bascule vers R2)."""
+        photos = Photo.objects.filter(profil__in=profils_demo)
+        total = photos.count()
+        if total == 0:
+            self.stdout.write("Aucune photo DEMO en base — lancer la commande sans option d'abord.")
+            return
+
+        alea = random.Random(42)
+        reparees, deja_ok = 0, 0
+
+        for photo in photos:
+            # `.storage.exists()` interroge le moteur actif (disque ou R2), pas la
+            # base : c'est la seule façon fiable de savoir si le fichier est là.
+            if photo.image.name and photo.image.storage.exists(photo.image.name):
+                deja_ok += 1
+                continue
+
+            profil = photo.profil
+            initiales = f"{profil.prenom[0]}{profil.nom[0]}"
+            indice = alea.randint(0, 1000)
+            nom_fichier = f"{profil.reference}-{photo.type}.jpg"
+            photo.image.save(
+                nom_fichier,
+                _placeholder(profil.reference, initiales, photo.type, photo.get_type_display(), indice),
+                save=True,
+            )
+            reparees += 1
+
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"{reparees} photo(s) recréée(s), {deja_ok} déjà présente(s) sur {total} au total."
+            )
         )
