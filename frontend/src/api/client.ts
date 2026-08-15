@@ -9,3 +9,4 @@ export type ProfilDetail = components["schemas"]["ProfilDetail"];
 export type Photo = components["schemas"]["Photo"];
 export type Sport = components["schemas"]["Sport"];
 export type Reference = components["schemas"]["Apparence"];
+export type Departement = components["schemas"]["Departement"];

@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import type { Reference, Sport } from "../../api/client";
+import type { Departement, Reference, Sport } from "../../api/client";
 import { EnTete } from "../../components/EnTete";
 import { ErreurValidation, creerProfil, modifierProfil, televerserPhoto } from "../../api/ecriture";
 import { useReferentiel } from "../recherche/useRecherche";
@@ -298,6 +298,7 @@ export function FormulaireProfil() {
   const apparences = useReferentiel<Reference>("/apparences/");
   const registres = useReferentiel<Reference>("/registres/");
   const metiers = useReferentiel<Reference>("/metiers/");
+  const departements = useReferentiel<Departement>("/departements/");
 
   // En modification, on repart du détail existant.
   const detail = useQuery({
@@ -517,6 +518,17 @@ export function FormulaireProfil() {
           <div className={styles.legende}>Géographie & mobilité</div>
           <div className={styles.grille}>
             <Champ {...champ("ville")} libelle="Ville" />
+            <Champ
+              {...champ("departement")}
+              libelle="Département"
+              options={[
+                ["", "—"],
+                ...(departements.data ?? [])
+                  .slice()
+                  .sort((a, b) => a.code.localeCompare(b.code))
+                  .map((d) => [String(d.id), `${d.code} — ${d.nom}`]),
+              ]}
+            />
             <Champ {...champ("distance_max_km")} libelle="Distance max (km)" type="number" />
           </div>
         </section>

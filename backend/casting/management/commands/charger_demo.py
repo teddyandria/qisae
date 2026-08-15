@@ -63,9 +63,23 @@ FONDS = [
     (58, 63, 78), (72, 66, 60), (54, 70, 68), (68, 58, 72),
     (46, 58, 76), (74, 62, 58), (52, 66, 58), (64, 60, 78),
 ]
-SUJET = (196, 198, 206)
 ENCRE_CLAIRE = (245, 245, 247)
 ANNOTATION = (150, 154, 166)
+
+# Carnations variées : une base de casting doit montrer cette diversité, et c'est
+# aussi ce qui permet de juger si l'interface sombre ne fausse pas leur perception.
+CARNATIONS = [
+    (247, 214, 190), (238, 198, 168), (224, 176, 142), (205, 154, 118),
+    (177, 124, 88), (146, 99, 70), (117, 78, 56), (92, 60, 43),
+]
+CHEVEUX = [
+    (40, 32, 28), (66, 44, 30), (98, 68, 40), (142, 108, 62),
+    (28, 24, 22), (172, 148, 108), (84, 52, 34), (52, 40, 34),
+]
+VETEMENTS = [
+    (58, 62, 74), (74, 60, 58), (52, 68, 64), (66, 58, 76),
+    (46, 56, 70), (70, 66, 54),
+]
 
 # Cadrage propre à chaque type de plan : une planche-contact montre le même
 # visage sous plusieurs valeurs, pas la même vignette répétée.
@@ -98,54 +112,91 @@ def _police(taille, gras=True):
 
 
 def _placeholder(reference, initiales, type_photo, libelle, indice, taille=(480, 600)):
-    """Vignette de démonstration : silhouette stylisée, jamais un visage.
+    """Vignette de démonstration : une figure en buste, jamais un visage.
 
-    Volontairement non photographique — il s'agit d'une base de casting, on ne
-    fabrique pas de personnes crédibles. Mais l'image doit être *lisible* : c'est
-    ce qui manquait à la version précédente, dont le texte était invisible.
+    Aucune photo de personne réelle n'est utilisée ici. Associer un visage
+    identifiable à une fiche de casting (nom, mensurations, origine déclarée,
+    dossier mineur) supposerait le consentement de la personne, qu'aucune licence
+    d'image ne remplace. On reste donc sur une figure abstraite — mais travaillée :
+    carnations variées, cadrage propre à chaque plan, composition de tirage.
     """
     largeur, hauteur = taille
     fond = FONDS[indice % len(FONDS)]
+    carnation = CARNATIONS[indice % len(CARNATIONS)]
+    vetement = VETEMENTS[(indice // 2) % len(VETEMENTS)]
     image = Image.new("RGB", taille, fond)
     dessin = ImageDraw.Draw(image)
 
     cadrage = CADRAGES.get(type_photo, CADRAGES["portrait"])
     echelle = cadrage["echelle"]
-    centre_x = largeur / 2 + (largeur * 0.06 if cadrage["profil"] else 0)
+    decalage_profil = largeur * 0.07 if cadrage["profil"] else 0
+    centre_x = largeur / 2 + decalage_profil
     centre_y = hauteur * (0.52 + cadrage["decalage"])
 
-    # Halo doux derrière le sujet : donne du volume sans dégradé tape-à-l'œil.
-    halo = int(min(largeur, hauteur) * 0.42 * echelle)
+    # Fond de studio : un halo légèrement plus clair derrière le sujet.
+    halo = int(min(largeur, hauteur) * 0.46 * echelle)
     dessin.ellipse(
-        [centre_x - halo, centre_y - halo, centre_x + halo, centre_y + halo],
-        fill=tuple(min(255, c + 14) for c in fond),
+        [centre_x - halo, centre_y - halo * 1.1, centre_x + halo, centre_y + halo * 1.3],
+        fill=tuple(min(255, c + 12) for c in fond),
     )
 
-    # Silhouette : tête + buste, en clair sur fond sourd.
-    rayon_tete = int(hauteur * 0.13 * echelle)
-    haut_tete = centre_y - rayon_tete * 2.1
-    dessin.ellipse(
-        [centre_x - rayon_tete, haut_tete, centre_x + rayon_tete, haut_tete + rayon_tete * 2],
-        fill=SUJET,
-    )
-    demi_buste = rayon_tete * 2.05
+    rayon_tete = hauteur * 0.125 * echelle
+    haut_tete = centre_y - rayon_tete * 2.4
+
+    # Buste habillé : c'est lui qui donne l'échelle du cadrage.
+    demi_buste = rayon_tete * 2.15
+    haut_buste = haut_tete + rayon_tete * 2.5
     dessin.ellipse(
         [
             centre_x - demi_buste,
-            haut_tete + rayon_tete * 2.35,
+            haut_buste,
             centre_x + demi_buste,
-            haut_tete + rayon_tete * 2.35 + demi_buste * 2.4,
+            haut_buste + demi_buste * 2.6,
         ],
-        fill=SUJET,
+        fill=vetement,
     )
 
-    # Initiales lisibles, posées sur le buste.
-    police_initiales = _police(int(rayon_tete * 1.15))
+    # Cou puis tête, en carnation : le sujet se distingue enfin du vêtement.
+    dessin.rectangle(
+        [
+            centre_x - rayon_tete * 0.42,
+            haut_tete + rayon_tete * 1.5,
+            centre_x + rayon_tete * 0.42,
+            haut_buste + rayon_tete * 0.4,
+        ],
+        fill=tuple(max(0, c - 12) for c in carnation),
+    )
+    dessin.ellipse(
+        [
+            centre_x - rayon_tete * 0.92,
+            haut_tete,
+            centre_x + rayon_tete * 0.92,
+            haut_tete + rayon_tete * 2.2,
+        ],
+        fill=carnation,
+    )
+
+    # Chevelure : une calotte plus sombre, décalée de profil comme la tête.
+    cheveux = CHEVEUX[indice % len(CHEVEUX)]
+    dessin.chord(
+        [
+            centre_x - rayon_tete * 0.98,
+            haut_tete - rayon_tete * 0.12,
+            centre_x + rayon_tete * 0.98,
+            haut_tete + rayon_tete * 1.6,
+        ],
+        180,
+        360,
+        fill=cheveux,
+    )
+
+    # Initiales en annotation sur le vêtement, pas en travers du visage.
+    police_initiales = _police(int(rayon_tete * 0.8))
     dessin.text(
-        (centre_x, haut_tete + rayon_tete * 3.5),
+        (centre_x, haut_buste + demi_buste * 0.95),
         initiales,
         font=police_initiales,
-        fill=fond,
+        fill=tuple(min(255, c + 55) for c in vetement),
         anchor="mm",
     )
 
