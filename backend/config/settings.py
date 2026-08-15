@@ -154,6 +154,30 @@ STORAGES = {
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# Photos sur Cloudflare R2 si configuré : le disque de Render est effacé à chaque
+# redéploiement (voir docs/decisions/0004), donc les fichiers uploadés par le
+# formulaire (pas seulement le jeu de démo régénérable) doivent vivre ailleurs.
+# Sans ces variables, on retombe sur le disque local — inchangé pour le développement.
+AWS_STORAGE_BUCKET_NAME = os.environ.get("R2_BUCKET")
+if AWS_STORAGE_BUCKET_NAME:
+    AWS_ACCESS_KEY_ID = os.environ["R2_ACCESS_KEY_ID"]
+    AWS_SECRET_ACCESS_KEY = os.environ["R2_SECRET_ACCESS_KEY"]
+    AWS_S3_ENDPOINT_URL = os.environ["R2_ENDPOINT_URL"]  # https://<compte>.r2.cloudflarestorage.com
+    AWS_S3_REGION_NAME = "auto"
+    AWS_S3_ADDRESSING_STYLE = "virtual"
+    AWS_DEFAULT_ACL = None  # R2 n'a pas d'ACL S3 ; le bucket doit être en accès public
+    AWS_QUERYSTRING_AUTH = False  # URLs stables, sans jeton de signature à expiration
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=31536000, immutable"}
+
+    # URL publique du bucket : le sous-domaine r2.dev fourni par Cloudflare, ou un
+    # domaine personnalisé si tu en as attaché un au bucket.
+    _domaine_r2 = os.environ.get("R2_DOMAINE_PUBLIC")
+    if _domaine_r2:
+        AWS_S3_CUSTOM_DOMAIN = _domaine_r2
+
+    STORAGES["default"] = {"BACKEND": "storages.backends.s3.S3Storage"}
+
 # Derrière le proxy de Render, c'est cet en-tête qui indique le HTTPS réel.
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 

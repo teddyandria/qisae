@@ -31,3 +31,16 @@ services:
         sync: false
       - key: ADMIN_EMAIL
         sync: false
+      # Photos sur Cloudflare R2 : le disque de Render est effacé à chaque
+      # redéploiement (voir docs/decisions/0004). Sans ces variables, on retombe
+      # sur le disque local — rien ne casse, seules les photos restent éphémères.
+      - key: R2_BUCKET
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_ENDPOINT_URL
+        sync: false
+      - key: R2_DOMAINE_PUBLIC
+        sync: false
