@@ -22,6 +22,16 @@ python manage.py charger_referentiel
 # `createsuperuser` (interactif) est inutilisable. Sans variables, ne fait rien.
 python manage.py creer_admin
 
+# Suppression du jeu de démonstration : à activer une fois (SUPPRIMER_DEMO=1),
+# puis retirer la variable. Le Shell de Render étant payant, il n'y a pas d'autre
+# moyen de lancer une commande ponctuelle qu'un déploiement.
+# Ne pas laisser CHARGER_DEMO=1 en même temps : le bloc suivant les recréerait
+# aussitôt après suppression.
+if [ "${SUPPRIMER_DEMO:-0}" = "1" ]; then
+  echo "→ Suppression du jeu de démonstration"
+  python manage.py charger_demo --reset
+fi
+
 # Jeu de démonstration, seulement si demandé (CHARGER_DEMO=1).
 # --reparer-photos tourne à chaque déploiement : la commande de base saute la
 # création si les profils DEMO-* existent déjà (idempotence), mais leurs photos
