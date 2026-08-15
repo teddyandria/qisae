@@ -243,8 +243,20 @@ class Command(BaseCommand):
 
         if options["reset"]:
             nombre_supprimes = anciens.count()
+            # Django ne supprime jamais le fichier physique en cascade : sans ceci,
+            # les images restent sur le disque ou sur R2, invisibles mais facturées.
+            fichiers_supprimes = 0
+            for photo in Photo.objects.filter(profil__in=anciens):
+                if photo.image.name and photo.image.storage.exists(photo.image.name):
+                    photo.image.storage.delete(photo.image.name)
+                    fichiers_supprimes += 1
             anciens.delete()
-            self.stdout.write(self.style.WARNING(f"{nombre_supprimes} profil(s) DEMO supprimé(s)."))
+            self.stdout.write(
+                self.style.WARNING(
+                    f"{nombre_supprimes} profil(s) DEMO supprimé(s), "
+                    f"{fichiers_supprimes} fichier(s) image supprimé(s)."
+                )
+            )
             return
 
         if anciens.exists():
