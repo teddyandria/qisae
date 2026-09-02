@@ -6,7 +6,12 @@ paths:
   /api/accents/:
     get:
       operationId: accents_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -27,10 +32,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/Accent'
           description: ''
+    post:
+      operationId: accents_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - accents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Accent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Accent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Accent'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accent'
+          description: ''
   /api/accents/{id}/:
     get:
       operationId: accents_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -52,7 +93,9 @@ paths:
   /api/apparences/:
     get:
       operationId: apparences_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes bornées par une réalité externe (réglementation, géographie) ou
+        sensibles : consultables par l'API, modifiables uniquement dans l'admin.
       parameters:
       - name: ordering
         required: false
@@ -76,7 +119,9 @@ paths:
   /api/apparences/{id}/:
     get:
       operationId: apparences_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes bornées par une réalité externe (réglementation, géographie) ou
+        sensibles : consultables par l'API, modifiables uniquement dans l'admin.
       parameters:
       - in: path
         name: id
@@ -98,7 +143,12 @@ paths:
   /api/competences-artistiques/:
     get:
       operationId: competences_artistiques_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -119,10 +169,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/CompetenceArtistique'
           description: ''
+    post:
+      operationId: competences_artistiques_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - competences-artistiques
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetenceArtistique'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CompetenceArtistique'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CompetenceArtistique'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetenceArtistique'
+          description: ''
   /api/competences-artistiques/{id}/:
     get:
       operationId: competences_artistiques_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -145,7 +231,12 @@ paths:
   /api/competences-conduite/:
     get:
       operationId: competences_conduite_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -166,10 +257,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/CompetenceConduite'
           description: ''
+    post:
+      operationId: competences_conduite_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - competences-conduite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetenceConduite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CompetenceConduite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CompetenceConduite'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetenceConduite'
+          description: ''
   /api/competences-conduite/{id}/:
     get:
       operationId: competences_conduite_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -192,7 +319,12 @@ paths:
   /api/competences-particulieres/:
     get:
       operationId: competences_particulieres_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -213,10 +345,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/CompetenceParticuliere'
           description: ''
+    post:
+      operationId: competences_particulieres_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - competences-particulieres
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetenceParticuliere'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CompetenceParticuliere'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CompetenceParticuliere'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetenceParticuliere'
+          description: ''
   /api/competences-particulieres/{id}/:
     get:
       operationId: competences_particulieres_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -272,7 +440,12 @@ paths:
   /api/costumes/:
     get:
       operationId: costumes_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -293,10 +466,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/Costume'
           description: ''
+    post:
+      operationId: costumes_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - costumes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Costume'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Costume'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Costume'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Costume'
+          description: ''
   /api/costumes/{id}/:
     get:
       operationId: costumes_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -334,7 +543,9 @@ paths:
   /api/departements/:
     get:
       operationId: departements_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes bornées par une réalité externe (réglementation, géographie) ou
+        sensibles : consultables par l'API, modifiables uniquement dans l'admin.
       parameters:
       - name: ordering
         required: false
@@ -358,7 +569,9 @@ paths:
   /api/departements/{id}/:
     get:
       operationId: departements_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes bornées par une réalité externe (réglementation, géographie) ou
+        sensibles : consultables par l'API, modifiables uniquement dans l'admin.
       parameters:
       - in: path
         name: id
@@ -380,7 +593,12 @@ paths:
   /api/instruments/:
     get:
       operationId: instruments_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -401,10 +619,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/Instrument'
           description: ''
+    post:
+      operationId: instruments_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - instruments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Instrument'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Instrument'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Instrument'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instrument'
+          description: ''
   /api/instruments/{id}/:
     get:
       operationId: instruments_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -426,7 +680,12 @@ paths:
   /api/langues/:
     get:
       operationId: langues_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -447,10 +706,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/Langue'
           description: ''
+    post:
+      operationId: langues_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - langues
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Langue'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Langue'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Langue'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Langue'
+          description: ''
   /api/langues/{id}/:
     get:
       operationId: langues_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -472,7 +767,12 @@ paths:
   /api/metiers/:
     get:
       operationId: metiers_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -493,10 +793,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/Metier'
           description: ''
+    post:
+      operationId: metiers_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - metiers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metier'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Metier'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Metier'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metier'
+          description: ''
   /api/metiers/{id}/:
     get:
       operationId: metiers_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -518,7 +854,9 @@ paths:
   /api/permis/:
     get:
       operationId: permis_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes bornées par une réalité externe (réglementation, géographie) ou
+        sensibles : consultables par l'API, modifiables uniquement dans l'admin.
       parameters:
       - name: ordering
         required: false
@@ -542,7 +880,9 @@ paths:
   /api/permis/{id}/:
     get:
       operationId: permis_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes bornées par une réalité externe (réglementation, géographie) ou
+        sensibles : consultables par l'API, modifiables uniquement dans l'admin.
       parameters:
       - in: path
         name: id
@@ -746,7 +1086,12 @@ paths:
   /api/prestations/:
     get:
       operationId: prestations_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -767,10 +1112,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/TypePrestation'
           description: ''
+    post:
+      operationId: prestations_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - prestations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TypePrestation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TypePrestation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TypePrestation'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypePrestation'
+          description: ''
   /api/prestations/{id}/:
     get:
       operationId: prestations_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -1271,7 +1652,12 @@ paths:
   /api/registres/:
     get:
       operationId: registres_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -1292,10 +1678,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/Registre'
           description: ''
+    post:
+      operationId: registres_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - registres
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Registre'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Registre'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Registre'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Registre'
+          description: ''
   /api/registres/{id}/:
     get:
       operationId: registres_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -1338,7 +1760,12 @@ paths:
   /api/sports/:
     get:
       operationId: sports_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -1359,10 +1786,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/Sport'
           description: ''
+    post:
+      operationId: sports_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - sports
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sport'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Sport'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Sport'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sport'
+          description: ''
   /api/sports/{id}/:
     get:
       operationId: sports_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -1384,7 +1847,12 @@ paths:
   /api/types-experience/:
     get:
       operationId: types_experience_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -1405,10 +1873,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/TypeExperience'
           description: ''
+    post:
+      operationId: types_experience_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - types-experience
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TypeExperience'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TypeExperience'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TypeExperience'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypeExperience'
+          description: ''
   /api/types-experience/{id}/:
     get:
       operationId: types_experience_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -1430,7 +1934,12 @@ paths:
   /api/types-vehicule/:
     get:
       operationId: types_vehicule_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -1451,10 +1960,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/TypeVehicule'
           description: ''
+    post:
+      operationId: types_vehicule_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - types-vehicule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TypeVehicule'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TypeVehicule'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TypeVehicule'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypeVehicule'
+          description: ''
   /api/types-vehicule/{id}/:
     get:
       operationId: types_vehicule_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -1476,7 +2021,12 @@ paths:
   /api/zones-mobilite/:
     get:
       operationId: zones_mobilite_list
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - name: ordering
         required: false
@@ -1497,10 +2047,46 @@ paths:
                 items:
                   $ref: '#/components/schemas/ZoneMobilite'
           description: ''
+    post:
+      operationId: zones_mobilite_create
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
+      tags:
+      - zones-mobilite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ZoneMobilite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ZoneMobilite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ZoneMobilite'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZoneMobilite'
+          description: ''
   /api/zones-mobilite/{id}/:
     get:
       operationId: zones_mobilite_retrieve
-      description: Listes qui alimentent le rail de filtres.
+      description: |-
+        Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+        Création seule côté API : renommer ou supprimer une entrée touche tous les
+        profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+        son écran de confirmation.
       parameters:
       - in: path
         name: id
@@ -1523,7 +2109,8 @@ components:
   schemas:
     Accent:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -1536,7 +2123,8 @@ components:
       - nom
     Apparence:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -1570,7 +2158,8 @@ components:
         * `individuel` - Sport individuel
     CompetenceArtistique:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -1594,7 +2183,8 @@ components:
       - niveau
     CompetenceConduite:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -1607,7 +2197,8 @@ components:
       - nom
     CompetenceParticuliere:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -1654,7 +2245,8 @@ components:
       - mot_de_passe
     Costume:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -1749,7 +2341,8 @@ components:
         * `sans_contrainte` - Sans contrainte particulière
     Instrument:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -1773,7 +2366,8 @@ components:
       - niveau
     Langue:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -1810,7 +2404,8 @@ components:
         * `longs` - Longs
     Metier:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -1989,13 +2584,15 @@ components:
           nullable: true
         age_apparent_min:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         age_apparent_max:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         telephone:
           type: string
@@ -2015,23 +2612,27 @@ components:
           type: boolean
         nombre_tournages:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         taille_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         poids_kg:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         pointure:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         taille_vetement:
           oneOf:
@@ -2039,23 +2640,27 @@ components:
           - $ref: '#/components/schemas/BlankEnum'
         taille_pantalon:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         tour_poitrine_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         tour_taille_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         tour_hanches_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         couleur_yeux:
           oneOf:
@@ -2102,8 +2707,9 @@ components:
           maxLength: 120
         distance_max_km:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         peut_dormir_sur_place:
           type: boolean
@@ -2284,13 +2890,15 @@ components:
           readOnly: true
         age_apparent_min:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         age_apparent_max:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         telephone:
           type: string
@@ -2311,8 +2919,9 @@ components:
           readOnly: true
         distance_max_km:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         peut_dormir_sur_place:
           type: boolean
@@ -2322,18 +2931,21 @@ components:
           type: boolean
         taille_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         poids_kg:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         pointure:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         taille_vetement:
           oneOf:
@@ -2341,23 +2953,27 @@ components:
           - $ref: '#/components/schemas/BlankEnum'
         taille_pantalon:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         tour_poitrine_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         tour_taille_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         tour_hanches_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         couleur_yeux:
           oneOf:
@@ -2407,8 +3023,9 @@ components:
           type: boolean
         nombre_tournages:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         apparences:
           type: array
@@ -2584,13 +3201,15 @@ components:
           nullable: true
         age_apparent_min:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         age_apparent_max:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         telephone:
           type: string
@@ -2610,23 +3229,27 @@ components:
           type: boolean
         nombre_tournages:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         taille_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         poids_kg:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         pointure:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         taille_vetement:
           oneOf:
@@ -2634,23 +3257,27 @@ components:
           - $ref: '#/components/schemas/BlankEnum'
         taille_pantalon:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         tour_poitrine_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         tour_taille_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         tour_hanches_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         couleur_yeux:
           oneOf:
@@ -2697,8 +3324,9 @@ components:
           maxLength: 120
         distance_max_km:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         peut_dormir_sur_place:
           type: boolean
@@ -2868,8 +3496,9 @@ components:
           readOnly: true
         taille_cm:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
         couleur_yeux:
           oneOf:
@@ -2940,14 +3569,16 @@ components:
           maxLength: 80
         annee:
           type: integer
-          maximum: 32767
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           nullable: true
       required:
       - type_vehicule
     Registre:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -2999,6 +3630,8 @@ components:
         * `A` - Autre
     Sport:
       type: object
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -3078,7 +3711,8 @@ components:
         * `sans_barbe` - Sans barbe
     TypeExperience:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -3091,7 +3725,8 @@ components:
       - nom
     TypePrestation:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -3104,7 +3739,8 @@ components:
       - nom
     TypeVehicule:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer
@@ -3131,7 +3767,8 @@ components:
       - type_vehicule
     ZoneMobilite:
       type: object
-      description: Alimente les listes du rail de filtres.
+      description: Alimente les listes du rail de filtres, et leur création par le
+        staff.
       properties:
         id:
           type: integer

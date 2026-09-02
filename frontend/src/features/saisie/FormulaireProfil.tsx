@@ -4,7 +4,13 @@ import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import type { Departement, Reference, Sport } from "../../api/client";
 import { EnTete } from "../../components/EnTete";
-import { ErreurValidation, creerProfil, modifierProfil, televerserPhoto } from "../../api/ecriture";
+import {
+  ErreurValidation,
+  creerProfil,
+  creerReference,
+  modifierProfil,
+  televerserPhoto,
+} from "../../api/ecriture";
 import { useReferentiel } from "../recherche/useRecherche";
 import styles from "./FormulaireProfil.module.css";
 
@@ -155,6 +161,100 @@ function Champ({
   );
 }
 
+/** Création d'une entrée de référentiel sans quitter la saisie.
+ *
+ *  Au niveau module, comme les autres composants de ce fichier : défini dans le
+ *  corps du formulaire, il changerait d'identité à chaque frappe et React
+ *  remonterait le champ, faisant perdre le focus après chaque caractère.
+ */
+function AjoutReference({
+  chemin,
+  libelle,
+  avecCategorie = false,
+  onCree,
+}: {
+  chemin: string;
+  libelle: string;
+  avecCategorie?: boolean;
+  onCree: (cree: { id: number; nom: string }) => void;
+}) {
+  const [ouvert, setOuvert] = useState(false);
+  const [nom, setNom] = useState("");
+  const [categorie, setCategorie] = useState("individuel");
+  const [erreur, setErreur] = useState<string | null>(null);
+  const [envoi, setEnvoi] = useState(false);
+
+  function fermer() {
+    setOuvert(false);
+    setNom("");
+    setErreur(null);
+  }
+
+  async function valider() {
+    const propre = nom.trim();
+    if (!propre) return;
+    setEnvoi(true);
+    setErreur(null);
+    try {
+      const cree = await creerReference(chemin, {
+        nom: propre,
+        ...(avecCategorie && { categorie }),
+      });
+      onCree(cree);
+      fermer();
+    } catch (e) {
+      setErreur((e as Error).message);
+    } finally {
+      setEnvoi(false);
+    }
+  }
+
+  if (!ouvert) {
+    return (
+      <button type="button" className={styles.ajouter} onClick={() => setOuvert(true)}>
+        + {libelle}
+      </button>
+    );
+  }
+
+  return (
+    <div className={styles.creation}>
+      <div className={styles.creationLigne}>
+        <input
+          autoFocus
+          value={nom}
+          placeholder={libelle}
+          onChange={(e) => setNom(e.target.value)}
+          // Entrée valide, Échap annule : on ne soumet jamais le formulaire
+          // profil depuis ce champ, d'où le preventDefault.
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              valider();
+            } else if (e.key === "Escape") {
+              e.preventDefault();
+              fermer();
+            }
+          }}
+        />
+        {avecCategorie && (
+          <select value={categorie} onChange={(e) => setCategorie(e.target.value)}>
+            <option value="individuel">Individuel</option>
+            <option value="collectif">Collectif</option>
+          </select>
+        )}
+        <button type="button" className={styles.ajouter} onClick={valider} disabled={envoi}>
+          {envoi ? "…" : "Créer"}
+        </button>
+        <button type="button" className={styles.retirer} onClick={fermer}>
+          Annuler
+        </button>
+      </div>
+      {erreur && <div className={styles.erreurChamp}>{erreur}</div>}
+    </div>
+  );
+}
+
 function BlocReferences({
   cle,
   legende,
@@ -162,6 +262,9 @@ function BlocReferences({
   famille,
   actifs,
   onBasculer,
+  chemin,
+  libelleAjout,
+  onCree,
 }: {
   cle: string;
   legende: string;
@@ -169,6 +272,9 @@ function BlocReferences({
   famille: string;
   actifs: number[];
   onBasculer: (cle: string, id: number) => void;
+  chemin?: string;
+  libelleAjout?: string;
+  onCree?: (cle: string, cree: { id: number; nom: string }) => void;
 }) {
   return (
     <section className={styles.section} style={couleur(famille)}>
@@ -186,6 +292,15 @@ function BlocReferences({
           </button>
         ))}
       </div>
+      {chemin && onCree && (
+        <div className={styles.zoneAjout}>
+          <AjoutReference
+            chemin={chemin}
+            libelle={libelleAjout ?? "Ajouter"}
+            onCree={(cree) => onCree(cle, cree)}
+          />
+        </div>
+      )}
     </section>
   );
 }
@@ -204,6 +319,10 @@ function BlocLiens({
   onRetirer,
   accents,
   avecAccent = false,
+  chemin,
+  libelleAjout,
+  avecCategorie = false,
+  onCree,
 }: {
   cle: string;
   legende: string;
@@ -218,6 +337,10 @@ function BlocLiens({
   onRetirer: (cle: string, index: number) => void;
   accents?: Reference[];
   avecAccent?: boolean;
+  chemin?: string;
+  libelleAjout?: string;
+  avecCategorie?: boolean;
+  onCree?: (cle: string, cree: { id: number; nom: string }) => void;
 }) {
   return (
     <section className={styles.section} style={couleur(famille)}>
@@ -263,15 +386,29 @@ function BlocLiens({
           </button>
         </div>
       ))}
-      <button
-        type="button"
-        className={styles.ajouter}
-        onClick={() =>
-          onAjouter(cle, { [champ]: "", niveau: niveaux[0][0], ...(avecAccent && { accent: null }) })
-        }
-      >
-        + Ajouter
-      </button>
+      <div className={styles.zoneAjout}>
+        <button
+          type="button"
+          className={styles.ajouter}
+          onClick={() =>
+            onAjouter(cle, {
+              [champ]: "",
+              niveau: niveaux[0][0],
+              ...(avecAccent && { accent: null }),
+            })
+          }
+        >
+          + Ajouter une ligne
+        </button>
+        {chemin && onCree && (
+          <AjoutReference
+            chemin={chemin}
+            libelle={libelleAjout ?? "Créer"}
+            avecCategorie={avecCategorie}
+            onCree={(cree) => onCree(cle, cree)}
+          />
+        )}
+      </div>
       {erreur && <div className={styles.erreurChamp}>{erreur.join(" ")}</div>}
     </section>
   );
@@ -376,6 +513,36 @@ export function FormulaireProfil() {
       };
     });
   }, []);
+
+  /** Après création d'une entrée : rafraîchir la liste et sélectionner la valeur.
+   *  Le référentiel est mis en cache une heure, sans invalidation la nouvelle
+   *  entrée resterait invisible dans la liste déroulante. */
+  const referenceCreee = useCallback(
+    (cle: string, chemin: string, cree: { id: number; nom: string }) => {
+      queryClient.invalidateQueries({ queryKey: ["referentiel", chemin] });
+      setEtat((precedent) => {
+        // Listes simples (chips) : on coche la nouvelle valeur.
+        if (Array.isArray(precedent[cle]) && typeof (precedent[cle] as unknown[])[0] !== "object") {
+          const actuels = (precedent[cle] as number[]) ?? [];
+          return { ...precedent, [cle]: [...actuels, cree.id] };
+        }
+        return precedent;
+      });
+    },
+    [queryClient],
+  );
+
+  /** Listes à niveau : on ajoute une ligne déjà renseignée avec la valeur créée. */
+  const referenceLienCreee = useCallback(
+    (cle: string, chemin: string, champ: string, niveau: string, cree: { id: number }) => {
+      queryClient.invalidateQueries({ queryKey: ["referentiel", chemin] });
+      setEtat((precedent) => ({
+        ...precedent,
+        [cle]: [...((precedent[cle] as Lien[]) ?? []), { [champ]: cree.id, niveau }],
+      }));
+    },
+    [queryClient],
+  );
 
   const ajouterLien = useCallback((cle: string, gabarit: Lien) => {
     setEtat((precedent) => ({
@@ -576,6 +743,9 @@ export function FormulaireProfil() {
           famille="apparence"
           actifs={(etat.registres as number[]) ?? []}
           onBasculer={basculerReference}
+          chemin="/registres/"
+          libelleAjout="Nouveau registre"
+          onCree={(cle, cree) => referenceCreee(cle, "/registres/", cree)}
         />
         <BlocReferences
           cle="metiers"
@@ -584,6 +754,9 @@ export function FormulaireProfil() {
           famille="metier"
           actifs={(etat.metiers as number[]) ?? []}
           onBasculer={basculerReference}
+          chemin="/metiers/"
+          libelleAjout="Nouveau métier"
+          onCree={(cle, cree) => referenceCreee(cle, "/metiers/", cree)}
         />
 
         <BlocLiens
@@ -593,6 +766,13 @@ export function FormulaireProfil() {
           liste={sports.data}
           niveaux={NIVEAUX_SPORT}
           famille="sport"
+        
+          chemin="/sports/"
+          libelleAjout="Nouveau sport"
+          avecCategorie
+          onCree={(cle, cree) =>
+            referenceLienCreee(cle, "/sports/", "sport", NIVEAUX_SPORT[0][0], cree)
+          }
         />
         <BlocLiens
           {...liensDe("langues")}
@@ -603,6 +783,12 @@ export function FormulaireProfil() {
           famille="langue"
           accents={accents.data}
           avecAccent
+        
+          chemin="/langues/"
+          libelleAjout="Nouvelle langue"
+          onCree={(cle, cree) =>
+            referenceLienCreee(cle, "/langues/", "langue", NIVEAUX_LANGUE[0][0], cree)
+          }
         />
         <BlocLiens
           {...liensDe("instruments")}
@@ -611,6 +797,12 @@ export function FormulaireProfil() {
           liste={instruments.data}
           niveaux={NIVEAUX_4}
           famille="experience"
+        
+          chemin="/instruments/"
+          libelleAjout="Nouvel instrument"
+          onCree={(cle, cree) =>
+            referenceLienCreee(cle, "/instruments/", "instrument", NIVEAUX_4[0][0], cree)
+          }
         />
         <BlocLiens
           {...liensDe("competences_artistiques")}
@@ -619,6 +811,12 @@ export function FormulaireProfil() {
           liste={artistiques.data}
           niveaux={NIVEAUX_4}
           famille="experience"
+        
+          chemin="/competences-artistiques/"
+          libelleAjout="Nouvelle compétence"
+          onCree={(cle, cree) =>
+            referenceLienCreee(cle, "/competences-artistiques/", "competence", NIVEAUX_4[0][0], cree)
+          }
         />
 
         <section className={styles.section} style={couleur("apparence")}>

@@ -41,11 +41,26 @@ from .models import (
 
 
 class ReferenceSerializer(serializers.ModelSerializer):
-    """Alimente les listes du rail de filtres."""
+    """Alimente les listes du rail de filtres, et leur création par le staff."""
 
     class Meta:
         model = None
         fields = ("id", "nom")
+
+    def validate_nom(self, valeur):
+        """Refuse un doublon à la casse ou aux espaces près.
+
+        `unique=True` laisse passer « Théâtre » à côté de « théâtre » : deux
+        entrées distinctes pour la même réalité, qui scinderaient les résultats
+        de recherche sans que personne ne le remarque.
+        """
+        valeur = " ".join(valeur.split())
+        existante = self.Meta.model.objects.filter(nom__iexact=valeur).first()
+        if existante:
+            raise serializers.ValidationError(
+                f"« {existante.nom} » existe déjà dans cette liste."
+            )
+        return valeur
 
 
 def _serializer_reference(modele):
@@ -72,8 +87,10 @@ AccentSerializer = _serializer_reference(Accent)
 CompetenceArtistiqueSerializer = _serializer_reference(CompetenceArtistique)
 
 
-class SportSerializer(serializers.ModelSerializer):
-    class Meta:
+class SportSerializer(ReferenceSerializer):
+    # Un sport porte sa catégorie (collectif / individuel) : sans elle, le sport
+    # créé n'apparaîtrait dans aucune famille du rail de filtres.
+    class Meta(ReferenceSerializer.Meta):
         model = Sport
         fields = ("id", "nom", "categorie")
 

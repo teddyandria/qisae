@@ -304,3 +304,46 @@
   display: block;
   margin-bottom: 2px;
 }
+
+/* Zone de création d'une entrée de référentiel, sous chaque liste. */
+.zoneAjout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.creation {
+  flex: 1 1 100%;
+}
+
+.creationLigne {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  animation: arrivee var(--transition) both;
+}
+
+.creationLigne input {
+  flex: 1 1 180px;
+  min-width: 0;
+  border: 1px solid var(--chinagraphe);
+  background: var(--surface-haute);
+  color: var(--encre);
+  padding: 6px 9px;
+  transition: box-shadow var(--transition);
+}
+
+.creationLigne input:focus {
+  box-shadow: 0 0 0 3px var(--chinagraphe-doux);
+  outline: none;
+}
+
+.creationLigne select {
+  border: 1px solid var(--ligne);
+  background: var(--surface-haute);
+  color: var(--encre);
+  padding: 6px 8px;
+}

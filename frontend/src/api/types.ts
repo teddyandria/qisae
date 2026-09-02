@@ -11,10 +11,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["accents_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["accents_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -28,7 +41,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["accents_retrieve"];
         put?: never;
         post?: never;
@@ -45,7 +64,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes bornées par une réalité externe (réglementation, géographie) ou
+         *     sensibles : consultables par l'API, modifiables uniquement dans l'admin.
+         */
         get: operations["apparences_list"];
         put?: never;
         post?: never;
@@ -62,7 +84,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes bornées par une réalité externe (réglementation, géographie) ou
+         *     sensibles : consultables par l'API, modifiables uniquement dans l'admin.
+         */
         get: operations["apparences_retrieve"];
         put?: never;
         post?: never;
@@ -79,10 +104,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["competences_artistiques_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["competences_artistiques_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -96,7 +134,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["competences_artistiques_retrieve"];
         put?: never;
         post?: never;
@@ -113,10 +157,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["competences_conduite_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["competences_conduite_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -130,7 +187,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["competences_conduite_retrieve"];
         put?: never;
         post?: never;
@@ -147,10 +210,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["competences_particulieres_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["competences_particulieres_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -164,7 +240,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["competences_particulieres_retrieve"];
         put?: never;
         post?: never;
@@ -204,10 +286,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["costumes_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["costumes_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -221,7 +316,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["costumes_retrieve"];
         put?: never;
         post?: never;
@@ -255,7 +356,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes bornées par une réalité externe (réglementation, géographie) ou
+         *     sensibles : consultables par l'API, modifiables uniquement dans l'admin.
+         */
         get: operations["departements_list"];
         put?: never;
         post?: never;
@@ -272,7 +376,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes bornées par une réalité externe (réglementation, géographie) ou
+         *     sensibles : consultables par l'API, modifiables uniquement dans l'admin.
+         */
         get: operations["departements_retrieve"];
         put?: never;
         post?: never;
@@ -289,10 +396,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["instruments_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["instruments_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -306,7 +426,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["instruments_retrieve"];
         put?: never;
         post?: never;
@@ -323,10 +449,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["langues_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["langues_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -340,7 +479,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["langues_retrieve"];
         put?: never;
         post?: never;
@@ -357,10 +502,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["metiers_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["metiers_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -374,7 +532,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["metiers_retrieve"];
         put?: never;
         post?: never;
@@ -391,7 +555,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes bornées par une réalité externe (réglementation, géographie) ou
+         *     sensibles : consultables par l'API, modifiables uniquement dans l'admin.
+         */
         get: operations["permis_list"];
         put?: never;
         post?: never;
@@ -408,7 +575,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes bornées par une réalité externe (réglementation, géographie) ou
+         *     sensibles : consultables par l'API, modifiables uniquement dans l'admin.
+         */
         get: operations["permis_retrieve"];
         put?: never;
         post?: never;
@@ -463,10 +633,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["prestations_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["prestations_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -480,7 +663,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["prestations_retrieve"];
         put?: never;
         post?: never;
@@ -565,10 +754,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["registres_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["registres_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -582,7 +784,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["registres_retrieve"];
         put?: never;
         post?: never;
@@ -622,10 +830,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["sports_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["sports_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -639,7 +860,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["sports_retrieve"];
         put?: never;
         post?: never;
@@ -656,10 +883,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["types_experience_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["types_experience_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -673,7 +913,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["types_experience_retrieve"];
         put?: never;
         post?: never;
@@ -690,10 +936,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["types_vehicule_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["types_vehicule_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -707,7 +966,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["types_vehicule_retrieve"];
         put?: never;
         post?: never;
@@ -724,10 +989,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["zones_mobilite_list"];
         put?: never;
-        post?: never;
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
+        post: operations["zones_mobilite_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -741,7 +1019,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Listes qui alimentent le rail de filtres. */
+        /**
+         * @description Listes que le staff peut enrichir depuis le formulaire de saisie.
+         *
+         *     Création seule côté API : renommer ou supprimer une entrée touche tous les
+         *     profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+         *     son écran de confirmation.
+         */
         get: operations["zones_mobilite_retrieve"];
         put?: never;
         post?: never;
@@ -755,12 +1039,12 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         Accent: {
             readonly id: number;
             nom: string;
         };
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         Apparence: {
             readonly id: number;
             nom: string;
@@ -780,7 +1064,7 @@ export interface components {
          * @enum {string}
          */
         CategorieEnum: "collectif" | "individuel";
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         CompetenceArtistique: {
             readonly id: number;
             nom: string;
@@ -790,12 +1074,12 @@ export interface components {
             niveau: string;
             competence: number;
         };
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         CompetenceConduite: {
             readonly id: number;
             nom: string;
         };
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         CompetenceParticuliere: {
             readonly id: number;
             nom: string;
@@ -817,7 +1101,7 @@ export interface components {
             identifiant: string;
             mot_de_passe: string;
         };
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         Costume: {
             readonly id: number;
             nom: string;
@@ -867,7 +1151,7 @@ export interface components {
          * @enum {string}
          */
         DisponibiliteScolaireEnum: "vacances" | "mercredi" | "hors_scolaire" | "sans_contrainte";
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         Instrument: {
             readonly id: number;
             nom: string;
@@ -877,7 +1161,7 @@ export interface components {
             niveau: string;
             instrument: number;
         };
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         Langue: {
             readonly id: number;
             nom: string;
@@ -895,7 +1179,7 @@ export interface components {
          * @enum {string}
          */
         LongueurCheveuxEnum: "courts" | "mi_longs" | "longs";
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         Metier: {
             readonly id: number;
             nom: string;
@@ -970,20 +1254,30 @@ export interface components {
             sexe?: components["schemas"]["SexeEnum"] | components["schemas"]["BlankEnum"];
             /** Format: date */
             date_naissance?: string | null;
+            /** Format: int64 */
             age_apparent_min?: number | null;
+            /** Format: int64 */
             age_apparent_max?: number | null;
             telephone?: string;
             email?: string;
             disponibilite?: components["schemas"]["DisponibiliteEnum"] | components["schemas"]["BlankEnum"];
             deja_figurant?: boolean;
+            /** Format: int64 */
             nombre_tournages?: number | null;
+            /** Format: int64 */
             taille_cm?: number | null;
+            /** Format: int64 */
             poids_kg?: number | null;
+            /** Format: int64 */
             pointure?: number | null;
             taille_vetement?: components["schemas"]["TailleVetementEnum"] | components["schemas"]["BlankEnum"];
+            /** Format: int64 */
             taille_pantalon?: number | null;
+            /** Format: int64 */
             tour_poitrine_cm?: number | null;
+            /** Format: int64 */
             tour_taille_cm?: number | null;
+            /** Format: int64 */
             tour_hanches_cm?: number | null;
             couleur_yeux?: components["schemas"]["CouleurYeuxEnum"] | components["schemas"]["BlankEnum"];
             couleur_cheveux?: components["schemas"]["CouleurCheveuxEnum"] | components["schemas"]["BlankEnum"];
@@ -1000,6 +1294,7 @@ export interface components {
             profil_multiculturel?: boolean;
             composition?: components["schemas"]["CompositionEnum"] | components["schemas"]["BlankEnum"];
             ville?: string;
+            /** Format: int64 */
             distance_max_km?: number | null;
             peut_dormir_sur_place?: boolean;
             vehicule_personnel_disponible?: boolean;
@@ -1067,23 +1362,33 @@ export interface components {
             sexe?: components["schemas"]["SexeEnum"] | components["schemas"]["BlankEnum"];
             readonly age: number;
             readonly est_mineur: boolean;
+            /** Format: int64 */
             age_apparent_min?: number | null;
+            /** Format: int64 */
             age_apparent_max?: number | null;
             telephone?: string;
             email?: string;
             ville?: string;
             readonly departement: components["schemas"]["Departement"];
+            /** Format: int64 */
             distance_max_km?: number | null;
             peut_dormir_sur_place?: boolean;
             vehicule_personnel_disponible?: boolean;
             besoin_transport?: boolean;
+            /** Format: int64 */
             taille_cm?: number | null;
+            /** Format: int64 */
             poids_kg?: number | null;
+            /** Format: int64 */
             pointure?: number | null;
             taille_vetement?: components["schemas"]["TailleVetementEnum"] | components["schemas"]["BlankEnum"];
+            /** Format: int64 */
             taille_pantalon?: number | null;
+            /** Format: int64 */
             tour_poitrine_cm?: number | null;
+            /** Format: int64 */
             tour_taille_cm?: number | null;
+            /** Format: int64 */
             tour_hanches_cm?: number | null;
             couleur_yeux?: components["schemas"]["CouleurYeuxEnum"] | components["schemas"]["BlankEnum"];
             couleur_cheveux?: components["schemas"]["CouleurCheveuxEnum"] | components["schemas"]["BlankEnum"];
@@ -1101,6 +1406,7 @@ export interface components {
             composition?: components["schemas"]["CompositionEnum"] | components["schemas"]["BlankEnum"];
             disponibilite?: components["schemas"]["DisponibiliteEnum"] | components["schemas"]["BlankEnum"];
             deja_figurant?: boolean;
+            /** Format: int64 */
             nombre_tournages?: number | null;
             readonly apparences: string[];
             readonly registres: string[];
@@ -1143,20 +1449,30 @@ export interface components {
             sexe?: components["schemas"]["SexeEnum"] | components["schemas"]["BlankEnum"];
             /** Format: date */
             date_naissance?: string | null;
+            /** Format: int64 */
             age_apparent_min?: number | null;
+            /** Format: int64 */
             age_apparent_max?: number | null;
             telephone?: string;
             email?: string;
             disponibilite?: components["schemas"]["DisponibiliteEnum"] | components["schemas"]["BlankEnum"];
             deja_figurant?: boolean;
+            /** Format: int64 */
             nombre_tournages?: number | null;
+            /** Format: int64 */
             taille_cm?: number | null;
+            /** Format: int64 */
             poids_kg?: number | null;
+            /** Format: int64 */
             pointure?: number | null;
             taille_vetement?: components["schemas"]["TailleVetementEnum"] | components["schemas"]["BlankEnum"];
+            /** Format: int64 */
             taille_pantalon?: number | null;
+            /** Format: int64 */
             tour_poitrine_cm?: number | null;
+            /** Format: int64 */
             tour_taille_cm?: number | null;
+            /** Format: int64 */
             tour_hanches_cm?: number | null;
             couleur_yeux?: components["schemas"]["CouleurYeuxEnum"] | components["schemas"]["BlankEnum"];
             couleur_cheveux?: components["schemas"]["CouleurCheveuxEnum"] | components["schemas"]["BlankEnum"];
@@ -1173,6 +1489,7 @@ export interface components {
             profil_multiculturel?: boolean;
             composition?: components["schemas"]["CompositionEnum"] | components["schemas"]["BlankEnum"];
             ville?: string;
+            /** Format: int64 */
             distance_max_km?: number | null;
             peut_dormir_sur_place?: boolean;
             vehicule_personnel_disponible?: boolean;
@@ -1242,6 +1559,7 @@ export interface components {
             readonly age: number;
             ville?: string;
             readonly departement: string;
+            /** Format: int64 */
             taille_cm?: number | null;
             couleur_yeux?: components["schemas"]["CouleurYeuxEnum"] | components["schemas"]["BlankEnum"];
             couleur_cheveux?: components["schemas"]["CouleurCheveuxEnum"] | components["schemas"]["BlankEnum"];
@@ -1266,9 +1584,10 @@ export interface components {
             readonly type_vehicule: string;
             marque?: string;
             modele?: string;
+            /** Format: int64 */
             annee?: number | null;
         };
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         Registre: {
             readonly id: number;
             nom: string;
@@ -1298,6 +1617,7 @@ export interface components {
          * @enum {string}
          */
         SexeEnum: "H" | "F" | "A";
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         Sport: {
             readonly id: number;
             nom: string;
@@ -1340,17 +1660,17 @@ export interface components {
          * @enum {string}
          */
         TypeEnum: "portrait" | "pied" | "profil" | "recente" | "sans_lunettes" | "avec_lunettes" | "cheveux_actuels" | "avec_barbe" | "sans_barbe";
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         TypeExperience: {
             readonly id: number;
             nom: string;
         };
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         TypePrestation: {
             readonly id: number;
             nom: string;
         };
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         TypeVehicule: {
             readonly id: number;
             nom: string;
@@ -1361,7 +1681,7 @@ export interface components {
             modele?: string;
             annee?: number | null;
         };
-        /** @description Alimente les listes du rail de filtres. */
+        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         ZoneMobilite: {
             readonly id: number;
             nom: string;
@@ -1393,6 +1713,31 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Accent"][];
+                };
+            };
+        };
+    };
+    accents_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Accent"];
+                "application/x-www-form-urlencoded": components["schemas"]["Accent"];
+                "multipart/form-data": components["schemas"]["Accent"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Accent"];
                 };
             };
         };
@@ -1485,6 +1830,31 @@ export interface operations {
             };
         };
     };
+    competences_artistiques_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompetenceArtistique"];
+                "application/x-www-form-urlencoded": components["schemas"]["CompetenceArtistique"];
+                "multipart/form-data": components["schemas"]["CompetenceArtistique"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompetenceArtistique"];
+                };
+            };
+        };
+    };
     competences_artistiques_retrieve: {
         parameters: {
             query?: never;
@@ -1529,6 +1899,31 @@ export interface operations {
             };
         };
     };
+    competences_conduite_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompetenceConduite"];
+                "application/x-www-form-urlencoded": components["schemas"]["CompetenceConduite"];
+                "multipart/form-data": components["schemas"]["CompetenceConduite"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompetenceConduite"];
+                };
+            };
+        };
+    };
     competences_conduite_retrieve: {
         parameters: {
             query?: never;
@@ -1569,6 +1964,31 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CompetenceParticuliere"][];
+                };
+            };
+        };
+    };
+    competences_particulieres_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompetenceParticuliere"];
+                "application/x-www-form-urlencoded": components["schemas"]["CompetenceParticuliere"];
+                "multipart/form-data": components["schemas"]["CompetenceParticuliere"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompetenceParticuliere"];
                 };
             };
         };
@@ -1638,6 +2058,31 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Costume"][];
+                };
+            };
+        };
+    };
+    costumes_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Costume"];
+                "application/x-www-form-urlencoded": components["schemas"]["Costume"];
+                "multipart/form-data": components["schemas"]["Costume"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Costume"];
                 };
             };
         };
@@ -1749,6 +2194,31 @@ export interface operations {
             };
         };
     };
+    instruments_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Instrument"];
+                "application/x-www-form-urlencoded": components["schemas"]["Instrument"];
+                "multipart/form-data": components["schemas"]["Instrument"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Instrument"];
+                };
+            };
+        };
+    };
     instruments_retrieve: {
         parameters: {
             query?: never;
@@ -1793,6 +2263,31 @@ export interface operations {
             };
         };
     };
+    langues_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Langue"];
+                "application/x-www-form-urlencoded": components["schemas"]["Langue"];
+                "multipart/form-data": components["schemas"]["Langue"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Langue"];
+                };
+            };
+        };
+    };
     langues_retrieve: {
         parameters: {
             query?: never;
@@ -1833,6 +2328,31 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Metier"][];
+                };
+            };
+        };
+    };
+    metiers_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Metier"];
+                "application/x-www-form-urlencoded": components["schemas"]["Metier"];
+                "multipart/form-data": components["schemas"]["Metier"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Metier"];
                 };
             };
         };
@@ -2080,6 +2600,31 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TypePrestation"][];
+                };
+            };
+        };
+    };
+    prestations_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TypePrestation"];
+                "application/x-www-form-urlencoded": components["schemas"]["TypePrestation"];
+                "multipart/form-data": components["schemas"]["TypePrestation"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TypePrestation"];
                 };
             };
         };
@@ -2387,6 +2932,31 @@ export interface operations {
             };
         };
     };
+    registres_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Registre"];
+                "application/x-www-form-urlencoded": components["schemas"]["Registre"];
+                "multipart/form-data": components["schemas"]["Registre"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Registre"];
+                };
+            };
+        };
+    };
     registres_retrieve: {
         parameters: {
             query?: never;
@@ -2450,6 +3020,31 @@ export interface operations {
             };
         };
     };
+    sports_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Sport"];
+                "application/x-www-form-urlencoded": components["schemas"]["Sport"];
+                "multipart/form-data": components["schemas"]["Sport"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Sport"];
+                };
+            };
+        };
+    };
     sports_retrieve: {
         parameters: {
             query?: never;
@@ -2490,6 +3085,31 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TypeExperience"][];
+                };
+            };
+        };
+    };
+    types_experience_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TypeExperience"];
+                "application/x-www-form-urlencoded": components["schemas"]["TypeExperience"];
+                "multipart/form-data": components["schemas"]["TypeExperience"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TypeExperience"];
                 };
             };
         };
@@ -2538,6 +3158,31 @@ export interface operations {
             };
         };
     };
+    types_vehicule_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TypeVehicule"];
+                "application/x-www-form-urlencoded": components["schemas"]["TypeVehicule"];
+                "multipart/form-data": components["schemas"]["TypeVehicule"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TypeVehicule"];
+                };
+            };
+        };
+    };
     types_vehicule_retrieve: {
         parameters: {
             query?: never;
@@ -2578,6 +3223,31 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ZoneMobilite"][];
+                };
+            };
+        };
+    };
+    zones_mobilite_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ZoneMobilite"];
+                "application/x-www-form-urlencoded": components["schemas"]["ZoneMobilite"];
+                "multipart/form-data": components["schemas"]["ZoneMobilite"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ZoneMobilite"];
                 };
             };
         };

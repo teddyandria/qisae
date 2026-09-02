@@ -104,3 +104,29 @@ export async function seDeconnecter() {
     headers: { "X-CSRFToken": jetonCsrf() },
   });
 }
+
+/** Crée une entrée de référentiel (sport, métier, langue…) sans quitter la saisie.
+ *  Le serveur refuse les doublons à la casse près : son message est remonté tel quel. */
+export async function creerReference(
+  chemin: string,
+  donnees: Record<string, string>,
+): Promise<{ id: number; nom: string }> {
+  const reponse = await fetch(`/api${chemin}`, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "X-CSRFToken": jetonCsrf(),
+    },
+    body: JSON.stringify(donnees),
+  });
+
+  if (reponse.status === 400) {
+    const corps = (await reponse.json()) as Record<string, string[]>;
+    throw new Error(corps.nom?.[0] ?? "Valeur refusée.");
+  }
+  if (reponse.status === 403) throw new Error("Création réservée aux administrateurs.");
+  if (!reponse.ok) throw new Error(`Erreur ${reponse.status}`);
+  return await reponse.json();
+}

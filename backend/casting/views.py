@@ -197,36 +197,54 @@ class DeconnexionView(APIView):
 
 
 class ReferenceViewSet(viewsets.ReadOnlyModelViewSet):
-    """Listes qui alimentent le rail de filtres."""
+    """Listes bornées par une réalité externe (réglementation, géographie) ou
+    sensibles : consultables par l'API, modifiables uniquement dans l'admin."""
 
     pagination_class = None
 
 
-def _viewset_reference(modele, serializer):
+class ReferenceOuverteViewSet(viewsets.ModelViewSet):
+    """Listes que le staff peut enrichir depuis le formulaire de saisie.
+
+    Création seule côté API : renommer ou supprimer une entrée touche tous les
+    profils qui s'y rattachent, cela reste donc réservé à l'admin Django, avec
+    son écran de confirmation.
+    """
+
+    pagination_class = None
+    permission_classes = [LectureAuthentifieeEcritureStaff]
+    http_method_names = ["get", "post", "head", "options"]
+
+
+def _viewset_reference(modele, serializer, ouverte=False):
     return type(
         f"{modele.__name__}ViewSet",
-        (ReferenceViewSet,),
+        (ReferenceOuverteViewSet if ouverte else ReferenceViewSet,),
         {"queryset": modele.objects.all(), "serializer_class": serializer},
     )
 
 
 ApparenceViewSet = _viewset_reference(Apparence, ApparenceSerializer)
-RegistreViewSet = _viewset_reference(Registre, RegistreSerializer)
-MetierViewSet = _viewset_reference(Metier, MetierSerializer)
+RegistreViewSet = _viewset_reference(Registre, RegistreSerializer, ouverte=True)
+MetierViewSet = _viewset_reference(Metier, MetierSerializer, ouverte=True)
 CompetenceParticuliereViewSet = _viewset_reference(
-    CompetenceParticuliere, CompetenceParticuliereSerializer
+    CompetenceParticuliere, CompetenceParticuliereSerializer, ouverte=True
 )
-CompetenceConduiteViewSet = _viewset_reference(CompetenceConduite, CompetenceConduiteSerializer)
-CompetenceArtistiqueViewSet = _viewset_reference(CompetenceArtistique, CompetenceArtistiqueSerializer)
-CostumeViewSet = _viewset_reference(Costume, CostumeSerializer)
-ZoneMobiliteViewSet = _viewset_reference(ZoneMobilite, ZoneMobiliteSerializer)
-TypeExperienceViewSet = _viewset_reference(TypeExperience, TypeExperienceSerializer)
-TypePrestationViewSet = _viewset_reference(TypePrestation, TypePrestationSerializer)
-TypeVehiculeViewSet = _viewset_reference(TypeVehicule, TypeVehiculeSerializer)
-InstrumentViewSet = _viewset_reference(Instrument, InstrumentSerializer)
-LangueViewSet = _viewset_reference(Langue, LangueSerializer)
-AccentViewSet = _viewset_reference(Accent, AccentSerializer)
-SportViewSet = _viewset_reference(Sport, SportSerializer)
+CompetenceConduiteViewSet = _viewset_reference(
+    CompetenceConduite, CompetenceConduiteSerializer, ouverte=True
+)
+CompetenceArtistiqueViewSet = _viewset_reference(
+    CompetenceArtistique, CompetenceArtistiqueSerializer, ouverte=True
+)
+CostumeViewSet = _viewset_reference(Costume, CostumeSerializer, ouverte=True)
+ZoneMobiliteViewSet = _viewset_reference(ZoneMobilite, ZoneMobiliteSerializer, ouverte=True)
+TypeExperienceViewSet = _viewset_reference(TypeExperience, TypeExperienceSerializer, ouverte=True)
+TypePrestationViewSet = _viewset_reference(TypePrestation, TypePrestationSerializer, ouverte=True)
+TypeVehiculeViewSet = _viewset_reference(TypeVehicule, TypeVehiculeSerializer, ouverte=True)
+InstrumentViewSet = _viewset_reference(Instrument, InstrumentSerializer, ouverte=True)
+LangueViewSet = _viewset_reference(Langue, LangueSerializer, ouverte=True)
+AccentViewSet = _viewset_reference(Accent, AccentSerializer, ouverte=True)
+SportViewSet = _viewset_reference(Sport, SportSerializer, ouverte=True)
 PermisViewSet = _viewset_reference(Permis, PermisSerializer)
 
 
