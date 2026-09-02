@@ -2,13 +2,14 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import type { Accent, Departement, Reference, Sport } from "../../api/client";
+import type { Accent, Departement, Photo, Reference, Sport } from "../../api/client";
 import { EnTete } from "../../components/EnTete";
 import {
   ErreurValidation,
   creerProfil,
   creerReference,
   modifierProfil,
+  supprimerPhoto,
   televerserPhoto,
 } from "../../api/ecriture";
 import { useReferentiel } from "../recherche/useRecherche";
@@ -473,6 +474,7 @@ export function FormulaireProfil() {
   const [envoi, setEnvoi] = useState(false);
   const [fichierPhoto, setFichierPhoto] = useState<File | null>(null);
   const [typePhoto, setTypePhoto] = useState("portrait");
+  const [photoEnSuppression, setPhotoEnSuppression] = useState<number | null>(null);
 
   const sports = useReferentiel<Sport>("/sports/");
   const langues = useReferentiel<Reference>("/langues/");
@@ -686,6 +688,20 @@ export function FormulaireProfil() {
     }
   }
 
+  async function retirerPhoto(photo: Photo) {
+    if (!window.confirm(`Supprimer cette photo (${photo.type_libelle ?? photo.type}) ?`)) return;
+    setPhotoEnSuppression(photo.id);
+    try {
+      await supprimerPhoto(photo.id);
+      queryClient.invalidateQueries({ queryKey: ["profil", id] });
+      queryClient.invalidateQueries({ queryKey: ["profils"] });
+    } catch (erreur) {
+      setMessage((erreur as Error).message);
+    } finally {
+      setPhotoEnSuppression(null);
+    }
+  }
+
   const champ = (cle: string) => ({
     cle,
     valeur: etat[cle],
@@ -887,6 +903,26 @@ export function FormulaireProfil() {
 
         <section className={styles.section} style={couleur("apparence")}>
           <div className={styles.legende}>Photo</div>
+          {modification && (etat.photos as Photo[] | undefined)?.length ? (
+            <div className={styles.galeriePhotos}>
+              {(etat.photos as Photo[]).map((photo) => (
+                <div key={photo.id} className={styles.photoExistante}>
+                  <img src={photo.url} alt={photo.type_libelle ?? photo.type} />
+                  <div className={styles.photoLegende}>{photo.type_libelle ?? photo.type}</div>
+                  <button
+                    type="button"
+                    className={styles.retirerPhoto}
+                    onClick={() => retirerPhoto(photo)}
+                    disabled={photoEnSuppression === photo.id}
+                    aria-label={`Supprimer la photo ${photo.type_libelle ?? photo.type}`}
+                    title="Supprimer cette photo"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : null}
           <div className={styles.grille}>
             <div className={styles.champ}>
               <label htmlFor="type_photo">Type de plan</label>

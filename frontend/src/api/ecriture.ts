@@ -65,6 +65,8 @@ export async function televerserPhoto(profil: number, type: string, fichier: Fil
   return await reponse.json();
 }
 
+export const supprimerPhoto = (id: number) => envoyer(`/api/photos/${id}/`, "DELETE", null);
+
 export type Session = { utilisateur: string | null; peut_saisir: boolean };
 
 /** Toujours accessible : c'est ce GET qui pose le cookie CSRF, y compris en anonyme. */

@@ -244,6 +244,64 @@
   background: rgba(255, 255, 255, 0.03);
 }
 
+.galeriePhotos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.photoExistante {
+  position: relative;
+  width: 96px;
+}
+
+.photoExistante img {
+  display: block;
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border: 1px solid var(--ligne);
+  background: var(--tirage);
+}
+
+.photoLegende {
+  margin-top: 3px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--annotation);
+}
+
+.retirerPhoto {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  border: 1px solid var(--ligne);
+  background: rgba(20, 21, 26, 0.82);
+  color: var(--encre);
+  width: 22px;
+  height: 22px;
+  line-height: 1;
+  cursor: pointer;
+  font-size: 13px;
+  transition:
+    border-color var(--transition),
+    color var(--transition),
+    background var(--transition);
+}
+
+.retirerPhoto:hover:not(:disabled) {
+  border-color: var(--statut-mineur);
+  color: var(--statut-mineur);
+}
+
+.retirerPhoto:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 .barre {
   position: sticky;
   bottom: 0;

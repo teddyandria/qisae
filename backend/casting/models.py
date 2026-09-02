@@ -543,6 +543,16 @@ class Photo(models.Model):
         ordering = ["type"]
         verbose_name = "photo"
 
+    def delete(self, *args, **kwargs):
+        # Django ne supprime jamais le fichier physique tout seul (ni ici, ni
+        # en cascade depuis Profil) : sans ce hook chaque suppression laisse
+        # un orphelin sur le stockage (déjà vu avec `charger_demo --reset`).
+        fichier = self.image
+        resultat = super().delete(*args, **kwargs)
+        if fichier and fichier.name and fichier.storage.exists(fichier.name):
+            fichier.storage.delete(fichier.name)
+        return resultat
+
     def __str__(self):
         return f"{self.get_type_display()} — {self.profil}"
 
