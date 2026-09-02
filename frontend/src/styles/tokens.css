@@ -23,14 +23,15 @@
   --ligne-claire: #d3d3cf;
 
   /* Accent unique : select, état actif, action principale.
-     Trois déclinaisons du même bleu, calées sur le contraste de leur support —
+     Plusieurs déclinaisons du même bleu, calées sur le contraste de leur support —
      un seul ton ne peut pas être lisible à la fois en texte sur fond sombre,
-     en texte sur carte claire, et sous du texte blanc. */
+     en texte sur carte claire, sur un fond teinté, et sous du texte blanc. */
   --chinagraphe: #4b6bff; /* bordures, cercle de select, fonds teintés */
   --chinagraphe-texte: #6485ff; /* texte sur fond sombre (5.5:1) */
   --chinagraphe-sombre: #2b45d4; /* texte sur carte claire (7.0:1) */
   --chinagraphe-plein: #3d5ce8; /* fond de bouton, texte blanc dessus (5.4:1) */
   --chinagraphe-doux: rgba(75, 107, 255, 0.14);
+  --chinagraphe-sur-doux: #7594ff; /* texte sur un fond --chinagraphe-doux (5.1:1) */
   --sur-accent: #ffffff; /* texte posé sur un aplat d'accent */
 
   /* Familles de facettes — versions lumineuses, lisibles sur fond sombre */

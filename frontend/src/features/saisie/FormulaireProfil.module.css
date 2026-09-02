@@ -210,7 +210,12 @@
 
 .retirer,
 .ajouter {
-  border: 1px solid var(--ligne);
+  /* Trait discontinu : distingue une *action* d'une *valeur* sélectionnable.
+     Les chips voisines ont un trait plein — sans cette différence, « + Nouveau
+     registre » se lit comme une entrée de la liste. L'accent reste réservé à
+     l'état actif (design.md), d'où le choix du style de trait plutôt que
+     d'une autre couleur. */
+  border: 1px dashed var(--ligne);
   background: transparent;
   font-family: var(--mono);
   font-size: 10px;
@@ -231,6 +236,9 @@
 }
 
 .ajouter:hover {
+  /* Le trait devient plein au survol : l'action se « solidifie » sous le
+     curseur, ce qui la démarque encore des chips au repos. */
+  border-style: solid;
   border-color: var(--famille, var(--chinagraphe));
   color: var(--famille, var(--chinagraphe-texte));
   background: rgba(255, 255, 255, 0.03);
@@ -311,7 +319,9 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  margin-top: 10px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dotted var(--ligne);
 }
 
 .creation {
@@ -346,4 +356,31 @@
   background: var(--surface-haute);
   color: var(--encre);
   padding: 6px 8px;
+}
+
+/* Validation d'une saisie en cours : trait plein, contrairement aux actions
+   secondaires en pointillés — ici on confirme, on n'ouvre pas un champ. */
+.confirmer {
+  border: 1px solid var(--chinagraphe);
+  background: var(--chinagraphe-doux);
+  /* Ton plus clair que --chinagraphe-texte : sur le fond teinté du bouton,
+     celui-ci retombait à 4.3:1, sous le seuil AA. */
+  color: var(--chinagraphe-sur-doux);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  cursor: pointer;
+  transition: filter var(--transition);
+}
+
+.confirmer:hover:not(:disabled) {
+  filter: brightness(1.25);
+}
+
+.confirmer:disabled {
+  opacity: 0.5;
+  cursor: default;
 }

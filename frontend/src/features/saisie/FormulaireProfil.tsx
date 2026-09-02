@@ -261,7 +261,7 @@ function AjoutReference({
             <option value="collectif">Collectif</option>
           </select>
         )}
-        <button type="button" className={styles.ajouter} onClick={valider} disabled={envoi}>
+        <button type="button" className={styles.confirmer} onClick={valider} disabled={envoi}>
           {envoi ? "…" : "Créer"}
         </button>
         <button type="button" className={styles.retirer} onClick={fermer}>
