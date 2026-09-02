@@ -2109,8 +2109,12 @@ components:
   schemas:
     Accent:
       type: object
-      description: Alimente les listes du rail de filtres, et leur création par le
-        staff.
+      description: |-
+        `langues` = les langues dans lesquelles l'accent s'entend (ids).
+
+        Liste vide = accent universel : le front l'affiche alors quelle que soit la
+        langue choisie. Voir le docstring du modèle Accent pour la nuance entre accent
+        régional et accent d'origine.
       properties:
         id:
           type: integer
@@ -2118,6 +2122,10 @@ components:
         nom:
           type: string
           maxLength: 120
+        langues:
+          type: array
+          items:
+            type: integer
       required:
       - id
       - nom

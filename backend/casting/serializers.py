@@ -83,8 +83,26 @@ TypePrestationSerializer = _serializer_reference(TypePrestation)
 TypeVehiculeSerializer = _serializer_reference(TypeVehicule)
 InstrumentSerializer = _serializer_reference(Instrument)
 LangueSerializer = _serializer_reference(Langue)
-AccentSerializer = _serializer_reference(Accent)
 CompetenceArtistiqueSerializer = _serializer_reference(CompetenceArtistique)
+
+
+class AccentSerializer(ReferenceSerializer):
+    """`langues` = les langues dans lesquelles l'accent s'entend (ids).
+
+    Liste vide = accent universel : le front l'affiche alors quelle que soit la
+    langue choisie. Voir le docstring du modèle Accent pour la nuance entre accent
+    régional et accent d'origine.
+    """
+
+    # `required=False` : le front crée un accent en ne saisissant qu'un nom, et un
+    # accent sans langue reste valide (universel).
+    langues = serializers.PrimaryKeyRelatedField(
+        queryset=Langue.objects.all(), many=True, required=False
+    )
+
+    class Meta(ReferenceSerializer.Meta):
+        model = Accent
+        fields = ("id", "nom", "langues")
 
 
 class SportSerializer(ReferenceSerializer):

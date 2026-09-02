@@ -163,7 +163,24 @@ class Langue(TableReference):
 
 
 class Accent(TableReference):
-    """§9 — parisien, marseillais, québécois, maghrébin…"""
+    """§9 — parisien, marseillais, québécois, maghrébin…
+
+    `langues` dit *dans quelles langues cet accent s'entend*, pas de quelle langue
+    il vient. La nuance compte pour deux familles d'accents :
+
+    - accent régional : « Marseillais », « Québécois » colorent le français, donc
+      rattachés au français ;
+    - accent d'origine : « Italien », « Espagnol », « Maghrébin » décrivent la
+      coloration qu'une personne donne à une langue *étrangère* qu'elle parle.
+      « Italien » se rattache donc au français (et éventuellement à l'anglais),
+      surtout pas à la langue italienne — un Italien parlant italien n'a pas
+      « l'accent italien ».
+
+    Laisser `langues` vide signifie « accent universel » : le front le propose
+    alors pour toutes les langues.
+    """
+
+    langues = models.ManyToManyField(Langue, related_name="accents", blank=True)
 
     class Meta(TableReference.Meta):
         verbose_name = "accent"

@@ -175,6 +175,28 @@ LISTES = {
     ],
 }
 
+# Langues dans lesquelles chaque accent s'entend — voir le docstring du modèle Accent.
+# Un accent d'origine (« Italien », « Maghrébin ») colore une langue étrangère parlée
+# par la personne : il se rattache au français, pas à sa langue d'origine.
+# Un accent absent de cette table, ou rattaché à rien, est considéré universel.
+ACCENTS_LANGUES = {
+    "Français standard": ["Français"],
+    "Parisien": ["Français"],
+    "Marseillais": ["Français"],
+    "Lyonnais": ["Français"],
+    "Québécois": ["Français"],
+    "Belge": ["Français"],
+    "Suisse": ["Français"],
+    "Antillais": ["Français"],
+    "Africain francophone": ["Français"],
+    "Britannique": ["Anglais"],
+    "Américain": ["Anglais"],
+    "Espagnol": ["Français", "Anglais"],
+    "Portugais": ["Français", "Anglais"],
+    "Italien": ["Français", "Anglais"],
+    "Maghrébin": ["Français", "Anglais"],
+}
+
 PERMIS = [
     ("B", "Voiture"), ("A", "Moto"), ("A1", "Moto légère"), ("A2", "Moto intermédiaire"),
     ("C", "Poids lourd"), ("D", "Transport en commun"),
@@ -187,6 +209,7 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
         total = 0
+        rattachements = 0
 
         for region_nom, departements in DEPARTEMENTS.items():
             region, _ = Region.objects.get_or_create(nom=region_nom)
@@ -212,10 +235,25 @@ class Command(BaseCommand):
                 _, cree = modele.objects.get_or_create(nom=nom)
                 total += cree
 
+        # Rattachement des accents aux langues : uniquement si l'accent n'a encore
+        # aucune langue. La commande tourne à chaque déploiement — elle ne doit pas
+        # écraser un rattachement ajusté à la main dans l'admin.
+        for accent_nom, langues_noms in ACCENTS_LANGUES.items():
+            accent = Accent.objects.filter(nom=accent_nom).first()
+            if accent is None or accent.langues.exists():
+                continue
+            langues = list(Langue.objects.filter(nom__in=langues_noms))
+            if langues:
+                accent.langues.set(langues)
+                rattachements += 1
+
         for code, libelle in PERMIS:
             _, cree = Permis.objects.get_or_create(code=code, defaults={"libelle": libelle})
             total += cree
 
         self.stdout.write(
-            self.style.SUCCESS(f"Référentiel chargé — {total} entrée(s) créée(s).")
+            self.style.SUCCESS(
+                f"Référentiel chargé — {total} entrée(s) créée(s), "
+                f"{rattachements} accent(s) rattaché(s) à leurs langues."
+            )
         )

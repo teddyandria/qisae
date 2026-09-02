@@ -56,7 +56,6 @@ for modele in (
     CompetenceArtistique,
     Instrument,
     Langue,
-    Accent,
     Metier,
     CompetenceParticuliere,
     Costume,
@@ -66,6 +65,27 @@ for modele in (
     TypeVehicule,
 ):
     admin.site.register(modele, ReferenceAdmin)
+
+
+@admin.register(Accent)
+class AccentAdmin(admin.ModelAdmin):
+    """Hors de la boucle ReferenceAdmin : un accent porte ses langues (M2M).
+
+    `search_fields` reste requis — les `autocomplete_fields` de ProfilLangueInline
+    s'appuient dessus.
+    """
+
+    list_display = ("nom", "liste_langues")
+    list_filter = ("langues",)
+    search_fields = ("nom",)
+    filter_horizontal = ("langues",)
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related("langues")
+
+    @admin.display(description="langues")
+    def liste_langues(self, obj):
+        return ", ".join(langue.nom for langue in obj.langues.all()) or "toutes"
 
 
 @admin.register(Departement)

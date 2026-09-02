@@ -1039,10 +1039,17 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
+        /**
+         * @description `langues` = les langues dans lesquelles l'accent s'entend (ids).
+         *
+         *     Liste vide = accent universel : le front l'affiche alors quelle que soit la
+         *     langue choisie. Voir le docstring du modèle Accent pour la nuance entre accent
+         *     régional et accent d'origine.
+         */
         Accent: {
             readonly id: number;
             nom: string;
+            langues?: number[];
         };
         /** @description Alimente les listes du rail de filtres, et leur création par le staff. */
         Apparence: {

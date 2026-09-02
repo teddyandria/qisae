@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import type { Departement, Reference, Sport } from "../../api/client";
+import type { Accent, Departement, Reference, Sport } from "../../api/client";
 import { EnTete } from "../../components/EnTete";
 import {
   ErreurValidation,
@@ -73,6 +73,21 @@ const TYPES_PHOTO = [
 ];
 
 type Lien = Record<string, string | number | null>;
+
+/** Un accent déclare les langues dans lesquelles il s'entend (type généré depuis
+ *  le contrat OpenAPI). Liste vide = accent universel, proposé pour toute langue. */
+type AccentAvecLangues = Accent;
+
+/** Accents proposables pour une langue : ceux qui lui sont rattachés, plus les
+ *  universels. Sans langue choisie, on ne propose rien — l'accent qualifie une
+ *  langue précise, le demander avant serait sans objet. */
+function accentsPour(
+  accents: AccentAvecLangues[] | undefined,
+  langueId: number | null,
+): AccentAvecLangues[] {
+  if (!accents || !langueId) return [];
+  return accents.filter((a) => !a.langues?.length || a.langues.includes(langueId));
+}
 type Etat = Record<string, unknown>;
 
 const ETAT_INITIAL: Etat = {
@@ -171,11 +186,13 @@ function AjoutReference({
   chemin,
   libelle,
   avecCategorie = false,
+  languesRattachees,
   onCree,
 }: {
   chemin: string;
   libelle: string;
   avecCategorie?: boolean;
+  languesRattachees?: number[];
   onCree: (cree: { id: number; nom: string }) => void;
 }) {
   const [ouvert, setOuvert] = useState(false);
@@ -199,6 +216,7 @@ function AjoutReference({
       const cree = await creerReference(chemin, {
         nom: propre,
         ...(avecCategorie && { categorie }),
+        ...(languesRattachees?.length && { langues: languesRattachees }),
       });
       onCree(cree);
       fermer();
@@ -323,6 +341,8 @@ function BlocLiens({
   libelleAjout,
   avecCategorie = false,
   onCree,
+  cheminAccent,
+  onAccentCree,
 }: {
   cle: string;
   legende: string;
@@ -335,12 +355,14 @@ function BlocLiens({
   onAjouter: (cle: string, gabarit: Lien) => void;
   onModifier: (cle: string, index: number, champ: string, valeur: string | number | null) => void;
   onRetirer: (cle: string, index: number) => void;
-  accents?: Reference[];
+  accents?: AccentAvecLangues[];
   avecAccent?: boolean;
   chemin?: string;
   libelleAjout?: string;
   avecCategorie?: boolean;
   onCree?: (cle: string, cree: { id: number; nom: string }) => void;
+  cheminAccent?: string;
+  onAccentCree?: (index: number, cree: { id: number; nom: string }) => void;
 }) {
   return (
     <section className={styles.section} style={couleur(famille)}>
@@ -368,18 +390,43 @@ function BlocLiens({
               </option>
             ))}
           </select>
-          {avecAccent && (
-            <select
-              value={String(lien.accent ?? "")}
-              onChange={(e) => onModifier(cle, index, "accent", Number(e.target.value) || null)}
-            >
-              <option value="">accent —</option>
-              {(accents ?? []).map((accent) => (
-                <option key={accent.id} value={accent.id}>
-                  {accent.nom}
-                </option>
-              ))}
-            </select>
+          {avecAccent &&
+            (() => {
+              const langueId = Number(lien[champ]) || null;
+              const proposables = accentsPour(accents, langueId);
+              return (
+                <select
+                  value={String(lien.accent ?? "")}
+                  disabled={!langueId}
+                  title={langueId ? undefined : "Choisis d'abord une langue"}
+                  onChange={(e) =>
+                    onModifier(cle, index, "accent", Number(e.target.value) || null)
+                  }
+                >
+                  <option value="">
+                    {!langueId
+                      ? "langue d'abord"
+                      : proposables.length
+                        ? "accent —"
+                        : "aucun accent"}
+                  </option>
+                  {proposables.map((accent) => (
+                    <option key={accent.id} value={accent.id}>
+                      {accent.nom}
+                    </option>
+                  ))}
+                </select>
+              );
+            })()}
+          {avecAccent && cheminAccent && onAccentCree && Number(lien[champ]) > 0 && (
+            <AjoutReference
+              chemin={cheminAccent}
+              libelle="Accent"
+              // La langue de la ligne est transmise : sans elle, l'accent créé
+              // serait universel et réapparaîtrait pour toutes les langues.
+              languesRattachees={[Number(lien[champ])]}
+              onCree={(cree) => onAccentCree(index, cree)}
+            />
           )}
           <button type="button" className={styles.retirer} onClick={() => onRetirer(cle, index)}>
             Retirer
@@ -429,7 +476,7 @@ export function FormulaireProfil() {
 
   const sports = useReferentiel<Sport>("/sports/");
   const langues = useReferentiel<Reference>("/langues/");
-  const accents = useReferentiel<Reference>("/accents/");
+  const accents = useReferentiel<AccentAvecLangues>("/accents/");
   const instruments = useReferentiel<Reference>("/instruments/");
   const artistiques = useReferentiel<Reference>("/competences-artistiques/");
   const apparences = useReferentiel<Reference>("/apparences/");
@@ -544,6 +591,20 @@ export function FormulaireProfil() {
     [queryClient],
   );
 
+  /** Accent créé depuis une ligne de langue : on rafraîchit la liste et on le
+   *  sélectionne sur la ligne d'où il a été créé. */
+  const accentCree = useCallback(
+    (index: number, cree: { id: number }) => {
+      queryClient.invalidateQueries({ queryKey: ["referentiel", "/accents/"] });
+      setEtat((precedent) => {
+        const liens = [...((precedent.langues as Lien[]) ?? [])];
+        if (liens[index]) liens[index] = { ...liens[index], accent: cree.id };
+        return { ...precedent, langues: liens };
+      });
+    },
+    [queryClient],
+  );
+
   const ajouterLien = useCallback((cle: string, gabarit: Lien) => {
     setEtat((precedent) => ({
       ...precedent,
@@ -556,6 +617,9 @@ export function FormulaireProfil() {
       setEtat((precedent) => {
         const liens = [...((precedent[cle] as Lien[]) ?? [])];
         liens[index] = { ...liens[index], [champ]: valeur };
+        // Changer la langue peut rendre l'accent déjà choisi incohérent : il
+        // disparaîtrait de la liste tout en restant enregistré. On le vide.
+        if (champ === "langue") liens[index].accent = null;
         return { ...precedent, [cle]: liens };
       });
     },
@@ -786,6 +850,8 @@ export function FormulaireProfil() {
         
           chemin="/langues/"
           libelleAjout="Nouvelle langue"
+          cheminAccent="/accents/"
+          onAccentCree={accentCree}
           onCree={(cle, cree) =>
             referenceLienCreee(cle, "/langues/", "langue", NIVEAUX_LANGUE[0][0], cree)
           }

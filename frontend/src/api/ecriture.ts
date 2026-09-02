@@ -109,7 +109,7 @@ export async function seDeconnecter() {
  *  Le serveur refuse les doublons à la casse près : son message est remonté tel quel. */
 export async function creerReference(
   chemin: string,
-  donnees: Record<string, string>,
+  donnees: Record<string, string | number[]>,
 ): Promise<{ id: number; nom: string }> {
   const reponse = await fetch(`/api${chemin}`, {
     method: "POST",
