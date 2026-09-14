@@ -43,6 +43,7 @@ véhicules, compétences…). Voir `docs/project.md`.
 | Coder côté React                         | `docs/conventions-frontend.md` |
 | Interface backend ↔ frontend             | `docs/api-contract.md`         |
 | Pourquoi une décision a été prise        | `docs/decisions/`              |
+| Sauvegardes, restauration, exploitation  | `docs/exploitation.md`         |
 
 ## Conventions transverses
 

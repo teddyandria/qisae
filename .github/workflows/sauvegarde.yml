@@ -1,0 +1,181 @@
+# Sauvegarde quotidienne de la base Neon et des photos R2.
+# Décision : docs/decisions/0005-sauvegardes-automatiques.md
+# Restauration : docs/exploitation.md — un dump non restauré n'est pas une sauvegarde.
+
+name: Sauvegarde
+
+on:
+  schedule:
+    # 03:17 UTC — heure creuse, et décalée de l'heure ronde : les crons GitHub
+    # planifiés à pile sont mis en file d'attente et peuvent décaler de plusieurs
+    # dizaines de minutes.
+    - cron: "17 3 * * *"
+  workflow_dispatch: # déclenchement manuel, pour tester sans attendre le lendemain
+
+# Deux exécutions simultanées écriraient dans le même bucket : on sérialise.
+concurrency:
+  group: sauvegarde
+  cancel-in-progress: false
+
+jobs:
+  sauvegarde:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    env:
+      # Bucket de sauvegarde, distinct du bucket des photos servies (0005).
+      BUCKET_SAUVEGARDE: ${{ vars.R2_BUCKET_SAUVEGARDE }}
+      BUCKET_PHOTOS: ${{ vars.R2_BUCKET }}
+      RETENTION_JOURS: 30
+
+    steps:
+      - name: Vérifier la configuration
+        # Sans ce garde-fou, un secret absent produit une commande qui réussit
+        # sur une chaîne vide : le workflow passerait au vert sans rien sauvegarder.
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          R2_ENDPOINT_URL: ${{ secrets.R2_ENDPOINT_URL }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          set -euo pipefail
+          manquants=""
+          for variable in DATABASE_URL R2_ENDPOINT_URL R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY; do
+            [ -n "${!variable:-}" ] || manquants="$manquants $variable"
+          done
+          for variable in BUCKET_SAUVEGARDE BUCKET_PHOTOS; do
+            [ -n "${!variable:-}" ] || manquants="$manquants $variable"
+          done
+          if [ -n "$manquants" ]; then
+            echo "::error::Configuration incomplète —$manquants. Voir docs/exploitation.md."
+            exit 1
+          fi
+
+      - name: Installer pg_dump 17
+        # La majeure doit être >= celle du serveur (Neon = 17, cf. compose.yml).
+        # Un client plus ancien refuse de s'exécuter : c'est la panne la plus
+        # fréquente de ce workflow. Le dépôt PGDG fournit une version épinglée,
+        # indépendante de ce qu'embarque l'image du runner.
+        run: |
+          set -euo pipefail
+          sudo install -d /usr/share/postgresql-common/pgdg
+          sudo curl -fsSL -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc \
+            https://www.postgresql.org/media/keys/ACCC4CF8.asc
+          echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] \
+            http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" \
+            | sudo tee /etc/apt/sources.list.d/pgdg.list > /dev/null
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends postgresql-client-17
+          pg_dump --version
+
+      - name: Installer rclone
+        uses: AnimMouse/setup-rclone@v1
+
+      - name: Configurer l'accès R2
+        # Écrit dans le fichier de config de rclone plutôt qu'en ligne de commande :
+        # les arguments d'un processus sont lisibles par tout le système.
+        env:
+          R2_ENDPOINT_URL: ${{ secrets.R2_ENDPOINT_URL }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          set -euo pipefail
+          install -d -m 700 ~/.config/rclone
+          umask 077
+          cat > ~/.config/rclone/rclone.conf <<EOF
+          [r2]
+          type = s3
+          provider = Cloudflare
+          access_key_id = $R2_ACCESS_KEY_ID
+          secret_access_key = $R2_SECRET_ACCESS_KEY
+          endpoint = $R2_ENDPOINT_URL
+          region = auto
+          # R2 ne gère pas les sommes de contrôle S3 de la version 4 de l'API.
+          no_check_bucket = true
+          EOF
+
+      - name: Sauvegarder la base
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          set -euo pipefail
+          horodatage="$(date -u +%Y-%m-%dT%H-%M-%SZ)"
+          archive="qisae-$horodatage.dump"
+
+          # Format « custom » (-Fc) : compressé, et restaurable sélectivement
+          # (une table seule) avec pg_restore — impossible avec un dump SQL brut.
+          # --no-owner / --no-privileges : les rôles Neon n'existent pas ailleurs,
+          # sans quoi la restauration échoue sur une base de destination différente.
+          pg_dump "$DATABASE_URL" \
+            --format=custom \
+            --no-owner \
+            --no-privileges \
+            --file="$archive"
+
+          octets="$(stat -c %s "$archive")"
+          echo "Archive : $archive ($octets octets)"
+
+          # Un dump valide n'est jamais vide : l'en-tête seul dépasse déjà ce seuil.
+          # Sans cette vérification, une base vidée par erreur serait sauvegardée
+          # telle quelle et écraserait l'historique utile au fil des jours.
+          if [ "$octets" -lt 1024 ]; then
+            echo "::error::Dump suspect ($octets octets) — sauvegarde interrompue."
+            exit 1
+          fi
+
+          # Relecture par pg_restore --list : vérifie que l'archive est lisible et
+          # contient bien des objets. C'est le minimum vérifiable sans restaurer.
+          if ! pg_restore --list "$archive" | grep -q "TABLE DATA"; then
+            echo "::error::Archive sans donnée de table — sauvegarde interrompue."
+            exit 1
+          fi
+
+          rclone copyto "$archive" "r2:$BUCKET_SAUVEGARDE/base/$archive" \
+            --s3-no-check-bucket
+          echo "✓ Base sauvegardée : base/$archive"
+
+      - name: Sauvegarder les photos
+        run: |
+          set -euo pipefail
+          # `sync` sans --delete : une suppression accidentelle côté photos ne doit
+          # pas se propager à la sauvegarde (0005). La copie ne transfère que les
+          # fichiers nouveaux ou modifiés.
+          rclone sync "r2:$BUCKET_PHOTOS" "r2:$BUCKET_SAUVEGARDE/photos" \
+            --s3-no-check-bucket \
+            --transfers 8 \
+            --stats-one-line \
+            --stats 30s
+          echo "✓ Photos synchronisées"
+
+      - name: Appliquer la rétention
+        # Après les sauvegardes : on ne supprime jamais d'ancien avant d'avoir
+        # écrit le nouveau.
+        run: |
+          set -euo pipefail
+          rclone delete "r2:$BUCKET_SAUVEGARDE/base" \
+            --min-age "${RETENTION_JOURS}d" \
+            --s3-no-check-bucket \
+            --verbose
+          echo "✓ Rétention appliquée (${RETENTION_JOURS} jours)"
+
+      - name: Récapitulatif
+        if: always()
+        run: |
+          set -euo pipefail
+          {
+            echo "### Sauvegarde du $(date -u '+%d/%m/%Y %H:%M UTC')"
+            echo ""
+            if [ "${{ job.status }}" = "success" ]; then
+              echo "Statut : **réussie**"
+              echo ""
+              echo "Dumps conservés (${RETENTION_JOURS} derniers jours) :"
+              echo '```'
+              rclone lsl "r2:$BUCKET_SAUVEGARDE/base" --s3-no-check-bucket | sort -k4 | tail -10
+              echo '```'
+            else
+              echo "Statut : **échouée** — voir le journal ci-dessus."
+              echo ""
+              echo "La sauvegarde de la veille reste disponible. Procédure :"
+              echo "\`docs/exploitation.md\`."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

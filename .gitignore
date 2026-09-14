@@ -18,3 +18,8 @@ node_modules/
 
 # macOS
 .DS_Store
+
+# Sauvegardes téléchargées lors d'une restauration (docs/exploitation.md).
+# Le dépôt est public : un dump contient toutes les données personnelles.
+*.dump
+*.sql
