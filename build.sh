@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
-# Construction pour Render : front puis backend, dans cet ordre — `collectstatic`
+# Construction de l'image : front puis backend, dans cet ordre — `collectstatic`
 # a besoin du `frontend/dist` produit juste avant.
+#
+# Rien ici ne touche à la base : les variables du service ne sont pas garanties
+# pendant le build (Railway). Migrations et chargements sont dans deploiement.sh,
+# lancé au démarrage.
 set -o errexit
 
 echo "→ Front (Vite)"
@@ -13,32 +17,3 @@ echo "→ Backend (Django)"
 pip install -r backend/requirements.txt
 cd backend
 python manage.py collectstatic --no-input
-python manage.py migrate
-
-# Référentiel du cahier des charges : idempotent, sans effet si déjà chargé.
-python manage.py charger_referentiel
-
-# Compte administrateur initial : le Shell de Render est payant, donc
-# `createsuperuser` (interactif) est inutilisable. Sans variables, ne fait rien.
-python manage.py creer_admin
-
-# Suppression du jeu de démonstration : à activer une fois (SUPPRIMER_DEMO=1),
-# puis retirer la variable. Le Shell de Render étant payant, il n'y a pas d'autre
-# moyen de lancer une commande ponctuelle qu'un déploiement.
-# Ne pas laisser CHARGER_DEMO=1 en même temps : le bloc suivant les recréerait
-# aussitôt après suppression.
-if [ "${SUPPRIMER_DEMO:-0}" = "1" ]; then
-  echo "→ Suppression du jeu de démonstration"
-  python manage.py charger_demo --reset
-fi
-
-# Jeu de démonstration, seulement si demandé (CHARGER_DEMO=1).
-# --reparer-photos tourne à chaque déploiement : la commande de base saute la
-# création si les profils DEMO-* existent déjà (idempotence), mais leurs photos
-# peuvent avoir disparu entre-temps — disque Render effacé, ou bascule vers un
-# nouveau stockage (R2). Sans dégât si tout est déjà en place.
-if [ "${CHARGER_DEMO:-0}" = "1" ]; then
-  echo "→ Jeu de démonstration"
-  python manage.py charger_demo || true
-  python manage.py charger_demo --reparer-photos
-fi
