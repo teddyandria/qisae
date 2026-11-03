@@ -1,7 +1,26 @@
 {
   "$schema": "https://schema.railpack.com",
   "packages": {
-    "node": "22",
-    "python": "3.12"
+    "node": "22.16.0",
+    "python": "3.13.0"
+  },
+  "steps": {
+    "build": {
+      "inputs": [{ "step": "packages:mise" }],
+      "commands": [
+        { "src": ".", "dest": "." },
+        "python -m venv /app/.venv",
+        { "path": "/app/.venv/bin" },
+        "bash build.sh"
+      ]
+    }
+  },
+  "deploy": {
+    "inputs": [
+      { "step": "packages:mise", "include": ["/mise/shims", "/mise/installs"] },
+      { "step": "build", "include": ["."] }
+    ],
+    "paths": ["/app/.venv/bin"],
+    "startCommand": "cd backend && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT"
   }
 }
