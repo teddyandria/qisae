@@ -18,10 +18,13 @@ if not SECRET_KEY:
     )
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
-# Render expose le domaine du service ; on l'autorise sans avoir à le recopier.
-_hote_render = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
-if _hote_render:
-    ALLOWED_HOSTS.append(_hote_render)
+# Render et Railway exposent le domaine public du service ; on l'autorise sans
+# avoir à le recopier. Railway ne le fournit qu'une fois un domaine généré.
+_hote_public = os.environ.get("RENDER_EXTERNAL_HOSTNAME") or os.environ.get(
+    "RAILWAY_PUBLIC_DOMAIN"
+)
+if _hote_public:
+    ALLOWED_HOSTS.append(_hote_public)
 
 # Le front est servi par Vite sur :5173 et proxifie /api vers :8000. Le navigateur
 # envoie donc `Origin: localhost:5173` sur les POST, alors que Django reçoit un Host
@@ -31,8 +34,8 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
     "DJANGO_CSRF_TRUSTED_ORIGINS",
     "http://localhost:5173,http://127.0.0.1:5173",
 ).split(",")
-if _hote_render:
-    CSRF_TRUSTED_ORIGINS.append(f"https://{_hote_render}")
+if _hote_public:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{_hote_public}")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
