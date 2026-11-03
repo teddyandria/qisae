@@ -26,6 +26,11 @@ _hote_public = os.environ.get("RENDER_EXTERNAL_HOSTNAME") or os.environ.get(
 if _hote_public:
     ALLOWED_HOSTS.append(_hote_public)
 
+# Le healthcheck de Railway se présente sous ce nom d'hôte, pas sous le domaine
+# public : sans lui, Django répond 400 et le déploiement est déclaré en échec.
+if os.environ.get("RAILWAY_SERVICE_ID"):
+    ALLOWED_HOSTS.append("healthcheck.railway.app")
+
 # Le front est servi par Vite sur :5173 et proxifie /api vers :8000. Le navigateur
 # envoie donc `Origin: localhost:5173` sur les POST, alors que Django reçoit un Host
 # réécrit en :8000 — sans cette liste, toute écriture est rejetée en 403 CSRF.
