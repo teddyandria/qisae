@@ -196,3 +196,16 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Sans ceci, Django n'écrit les traces des erreurs 500 dans la console qu'en
+# DEBUG ; en production il tente de les envoyer par mail (non configuré) et
+# elles disparaissent. Sur la sortie standard, l'hébergeur les affiche dans
+# ses logs de déploiement.
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "loggers": {
+        "django.request": {"handlers": ["console"], "level": "ERROR", "propagate": False},
+    },
+}
